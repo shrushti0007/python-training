@@ -13,3 +13,4 @@ def check_pass_fail(marks):
         return "passed"
     else:
         return "failed"
+    
