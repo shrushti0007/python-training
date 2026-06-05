@@ -1,10 +1,25 @@
-from flask import Flask 
+from flask import Flask , render_template
 
 app = Flask(__name__)
 
+# project data - dictionary
+stud = [
+    { "name": "Shrushti", "roll": 1, "marks": 85},
+    { "name": "Soham", "roll": 2, "marks": 92},
+    {"name": "Ganagaprasad", "roll": 3, "marks": 78},
+    {"name": "Aarti", "roll": 4, "marks": 65},
+]
+
 @app.route('/')
 def home():
-    return '<h1>college portal</h1>'
+    # Crereate using HTMl
+    html = '<h1>College Portal - Students</h1>'
+    html += '<ul>'
+    # Student list 
+    for Student in stud:
+        html += f'<li>{Student["name"]} - Roll: {Student["roll"]} - Maeks: {Student["marks"]}</li>'
+    html += '</ul>'
+    return html
 
 @app.route('/aboute')
 def about():
@@ -12,9 +27,10 @@ def about():
 
 @app.route('/students')
 def students():
-    return '<h1>Students</h1><p>All students will show here</p>'
+    return '<h1>students</h1><p>All students will show here</p>'
 
 if __name__ == '__main__':
     app.run(debug=True)
     
+     
 
