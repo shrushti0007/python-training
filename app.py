@@ -1,36 +1,99 @@
-from flask import Flask , render_template
+from flask import Flask
 
 app = Flask(__name__)
 
-# project data - dictionary
-stud = [
-    { "name": "Shrushti", "roll": 1, "marks": 85},
-    { "name": "Soham", "roll": 2, "marks": 92},
-    {"name": "Ganagaprasad", "roll": 3, "marks": 78},
-    {"name": "Aarti", "roll": 4, "marks": 65},
-]
-
+# Home page
 @app.route('/')
 def home():
-    # Crereate using HTMl
-    html = '<h1>College Portal - Students</h1>'
-    html += '<ul>'
-    # Student list 
-    for Student in stud:
-        html += f'<li>{Student["name"]} - Roll: {Student["roll"]} - Maeks: {Student["marks"]}</li>'
-    html += '</ul>'
-    return html
+    return  "<h1>EXAM LEAK DETECTION & TRANSPARENCY PLATFORM</H1>"
 
-@app.route('/aboute')
+# About page
+@app.route('/about')
 def about():
-    return '<h1>About Us</h1><p>This is a college management system.</p>'
+    return """
+    <h1>About Us</h1>
+    <p>This project Helps Users Report Exam-related Issues</p>
+    <a href="/">Back to Home</a>
+    """
 
+# Report page
 @app.route('/students')
 def students():
-    return '<h1>students</h1><p>All students will show here</p>'
+
+    reports = [
+        {
+            "reports_id": "ELD-001",
+            "exam_name": "MSBTE Summer 2026",
+            "subject_name": "MICROPROCESSOR PROGRAMMING",
+            "college_name": "Goverment Polytechnic Hingoli",
+            "status": "pending",
+            "report_date": "01-06-2026",
+
+        },
+        {
+            "reports_id": "ELD-002",
+            "exam_name": "MSBTE Summer 2026",
+            "subject_name": "Data Structure",
+            "college_name": "Goverment Polytechnic Hingoli",
+            "status": "Resolved",
+            "report_date": "02-06-2026"
+        },
+
+        {
+            "reports_id": "ELD-003",
+            "exam_name": "MSBTE Summer 2026",
+            "subject_name": "DATABASE MANAGEMENT SYSTEM",
+            "college_name": "Goverment Polytechnic Hingoli",
+            "status": "Resolved",
+            "report_date": "03-06-2026",
+        },   
+        {
+            "reports_id": "ELD-004",
+            "exam_name": "MSBTE Summer 2026",
+            "subject_name": "DTE",
+            "college_name": "Goverment Polytechnic Hingoli",
+            "status": "pending",
+            "report_date": "04-06-2026"
+        }
+    ]
+    html = "<h1>Exam Leak Reports</h1><ul>"
+    for r in reports:
+        html += f"<li>{r['exam_name']} - {r['subject_name']} - {r['status']}</li>"
+    html += """
+     </ul>
+
+     <form> 
+             Exam Name:<br>
+             <input type="text"><br><br>
+
+             Subject Name:<br>
+             <input type="text"><br><br>
+
+             College Name:<br>
+             <input type="text"><br><br>
+
+             Status:<br>
+             <input type="text"><br><br>
+
+             Report Date:<br>
+             <input type="text"><br><br>
+
+             Issue Description:<br>
+             <textarea rows="5" cols="30"></textarea><br><br>
+
+             <input type="submit" value="Submit Report">
+        </form>
+
+        <br>
+        <a href="/">Back to Home</a>
+        """
+
+    return html
+    
+print("STARTING FLASK")
+print(__name__)
 
 if __name__ == '__main__':
+    print("INSIDE MAIN")
     app.run(debug=True)
     
-     
-
