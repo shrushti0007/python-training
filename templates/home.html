@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title1>Home</title1>
+
+</head>
+<body>
+   <h1>Server chalu zala</h1>
+ 
+ {% extends 'base.html' %}
+ {% block title %} Home - college portal {% endblock %}
+ {% block content %}
+ <h1>welcome to college</h1>
+ <p>Total students: {{ students|length }}</p>
+ <h2> Quick Status</h2>
+ <ul>
+    <li>Total Students</li>
+ </ul>
+      {% for student in students %}
+       <li> 
+         {{ student.name}} -
+         {{ student.marks }} marks -
+         {{ % if student.marks >= 90 %}}
+            Excellent
+         {{% elif student.marks >= 75 %}}
+            Good
+         {{% elif student.marks >= 60 % }}
+            Average
+         {% else %}
+            Needs Improvement
+         {% endif %}
+      </li>
+   {% endfor %}
+</ul>
+{% endblock %}      
