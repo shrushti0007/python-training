@@ -2,10 +2,27 @@
  {% block title %} About-College Portal {% endblock}
 
  {% block content %}
- <h1> About College Portal </h1>
- <p> College Portal is a manage student information and about</p>
- <p><a href="{{ur_for('home')}}"><--Back to Home</a></p>
- 
- </p></a></p>
- {% endblock %}
+ <div class="d-flex justify-content-center align-items-center" style="height: 200px ;">
+    <div class="col-ms-8"></div>
+         <div class="card shadow">
+            <div class="card-header bg-secondary text-white">
+                <h4 class="mb-2">About This Project</h4>
+            </div>
+            <div class="card-body">
+                <p class="card-text">This Project is a simple flask application that demo and display it in a user-friendly way. It include features such as listing students,</user-friendly> 
+                </p>
+                <hr>
+                <h5 class="mb-2">Technologies Used</h5>
+                <ul>
 
+                    <li>Python 3.14</li>
+                    <li>Flask web framework</li>
+                    <li>Jinja2 template engine</li>
+                    <li>Bootstrap</li>
+                    <a href="{{url_for('home')}}"
+                    class="btn btn-primary mt-3">Back to Home</a>
+                </ul>
+            </div>
+        </div>
+    </div>
+    {% endblock %}

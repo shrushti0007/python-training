@@ -1,16 +1,27 @@
 from flask import Flask, render_template
+
 app = Flask(__name__)
 
-@app.route("/")
+students =[
+    {"name": "Tanuja", "roll": 1, "marks": 85},
+    {"name": "Pratiksha", "roll": 2, "marks": 78},
+    {"name": "Shalok", "roll": 3, "marks": 92},
+    {"name": "Lucky", "roll": 4, "marks": 65},
+]
+
+@app.route('/')
 def home():
-     return render_template("home.html")
+    return render_template('home.html',students=students)
+
 @app.route('/students')
-def students_page():
-     return "Students page lavkar"
+def students():
+    return render_template('Students.html', students=students)
 
-@app.route('/about')
-def about():
-     return "About page lavkar"
+@app.route('/courses')
+def courses():
+    return "Courses Page"
 
-if __name__ == "__main__":
-    app.run(debug=True,host='0.0.0.0',port=5000)   
+if __name__ == '__main__':
+    app.run(debug=True)
+    
+    
