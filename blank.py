@@ -1,9 +1,8 @@
-from flask import Flask,render_template, request,url_for,flash
-app = Flask(__name__)
-app.secret_key = "linkkiwi2026" # Needed for flash
-@app.route("/")
-def home():
-    return '<h1>My Project</h1>'
+GET - 
+URL http://127.0.0.1:5000/students
+Data in URL - visible
 
-if __name__ == "__main__":
-    app.run(debug=True)
+POST - 
+Data hidden in URL
+Form subit
+Used for login, add record, search
