@@ -4,6 +4,7 @@ from flask import Flask, render_template, request, flash
 
 app = Flask(__name__)
 app.secret_key = "linkkiwi2026"
+
 BASE_DIR = Path(__file__).resolve().parent
 DB_PATH = BASE_DIR / "myproject.db"
 
