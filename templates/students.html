@@ -1,169 +1,267 @@
-{% extends 'base.html' %}
-{% block title %}Students — College Portal{% endblock %}
+{% extends "base.html" %}
+
+{% block title %}
+Students — Government Polytechnic Hingoli
+{% endblock %}
+
+
 
 {% block content %}
 
-<!-- Page header -->
 
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <div>
-        <h2 class="fw-bold mb-1">All Students</h2>
-        <p class="text-muted mb-0">
-            Complete student records and performance
-        </p>
+<div class="container mt-4">
+
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+
+
+        <h2>
+            <i class="bi bi-people-fill"></i>
+            Students List
+        </h2>
+
+
+
+        <a href="/add_student" class="btn btn-success">
+
+            <i class="bi bi-person-plus"></i>
+            Add Student
+
+        </a>
+
+
     </div>
-    <span class="badge fs-6 px-3 py-2"
-          style="background-color: #1e3a5f;">
-        {{ students|length }} Records
-    </span>
-</div>
 
-<!-- Live Search -->
-<div class="mb-3">
-    <input type="text"
-           id="searchInput"
-           class="form-control form-control-lg"
-           placeholder="🔍 Type to search students by name...">   
-    <div id="resultInfo" class="text-muted small mt-1"></div>
-</div>
 
-<!-- Stats summary bar -->
 
-<div class="row mb-4">
-    {% set excellent = students|selectattr('marks','ge',90)|list %}
-    {% set good      = students|selectattr('marks','ge',75)|list %}
-    {% set average   = students|selectattr('marks','ge',60)|list %}
-    <div class="col text-center">
-        <span class="badge bg-success px-3 py-2 me-2">
-            🏆 Excellent: {{ excellent|length }}
-        </span>
-        <span class="badge bg-primary px-3 py-2 me-2">
-            👍 Good: {{ good|length }}
-        </span>
-        <span class="badge bg-warning text-dark px-3 py-2 me-2">
-            📈 Average: {{ average|length }}
-        </span>
-    </div>
-</div>
 
-<!-- Table -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
 
-<div class="card shadow-sm">
-    <div class="card-body p-0">
-        <div class="table-responsive">
-            <table class="table table-hover mb-0">
-                <thead style="background-color: #1e3a5f; color:white;">
-                    <tr>
-                        <th class="py-3 ps-4">#</th>
-                        <th class="py-3">Name</th>
-                        <th class="py-3">Roll Number</th>
-                        <th class="py-3">Marks</th>
-                        <th class="py-3">Performance</th>
-                        <th class="py-3 text-center">Grade</th>
-                        <th class="py-3 text-center">Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="tableBody">
+        {% if messages %}
+
+
+            {% for category, message in messages %}
+
+                <div class="alert alert-{{ category }}">
+
+                    {{ message }}
+
+                </div>
+
+
+            {% endfor %}
+
+
+        {% endif %}
+
+    {% endwith %}
+
+
+
+
+    <div class="card shadow">
+
+
+        <div class="card-header">
+
+            <h5 class="mb-0">
+
+                Student Records
+
+            </h5>
+
+        </div>
+
+
+
+        <div class="card-body">
+
+
+            <div class="table-responsive">
+
+
+                <table class="table table-bordered table-hover">
+
+
+                    <thead class="table-dark">
+
+
+                        <tr>
+
+
+                            <th>
+                                ID
+                            </th>
+
+
+                            <th>
+                                Name
+                            </th>
+
+
+                            <th>
+                                Roll No
+                            </th>
+
+
+                            <th>
+                                Subject
+                            </th>
+                            
+                            <th>
+                                Marks
+                            </th>
+
+
+                            <th>
+                                Attendance
+                            </th>
+
+
+                            <th>
+                                Action
+                            </th>
+
+
+                        </tr>
+
+
+                    </thead>
+
+
+
+                    <tbody>
+
+
+
                     {% for student in students %}
-                    <tr class="align-middle" data-name="{{ student.name|lower }}">
-                        <td class="ps-4 text-muted">
-                            {{ loop.index }}
+
+
+                        <tr>
+
+
+                            <td>
+                                {{ student['id'] }}
+                            </td>
+
+
+
+                            <td>
+                                {{ student['name'] }}
+                            </td>
+
+
+
+                            <td>
+                                {{ student['roll'] }}
+                            </td>
+
+
+
+                            <td>
+                                {{ student['subject'] }}
+                            </td>
+
+
+
+                            <td>
+                                {{ student['marks'] }}
+                            </td>
+
+
+
+                            <td>
+                                {{ student['attendance'] }}%
+                            </td>
+
+
+
+                            <td>
+
+
+                                <a href="/detail/{{ student['id'] }}"
+                                   class="btn btn-info btn-sm">
+
+                                    <i class="bi bi-eye"></i>
+                                    View
+
+                                </a>
+
+
+
+                                <a href="/edit_student/{{ student['id'] }}"
+                                   class="btn btn-primary btn-sm">
+
+                                    <i class="bi bi-pencil"></i>
+                                    Edit
+
+                                </a>
+
+
+
+                                <a href="/delete_student/{{ student['id'] }}"
+                                   class="btn btn-danger btn-sm"
+                                   onclick="return confirm('Delete this student?');">
+
+
+                                    <i class="bi bi-trash"></i>
+                                    Delete
+
+
+                                </a>
+
+
+                            </td>
+
+
+                        </tr>
+
+
+                    {% endfor %}
+                    
+                    {% if students|length == 0 %}
+
+                    <tr>
+
+                        <td colspan="7" class="text-center">
+
+                            <h5 class="text-muted">
+                                No students found
+                            </h5>
+
+
+                            <a href="/add_student" 
+                               class="btn btn-success mt-2">
+
+                                Add First Student
+
+                            </a>
+
                         </td>
-                    <td>
-                        <div class="d-flex align-items-center">
-                            <div class="rounded-circle d-flex align-items-center
-                                        justify-content-center me-2 text-white fw-bold"
-                                 style="width:36px; height:36px; font-size:14px;
-                                        background-color: #1e3a5f;">
-                                {{ student.name[0] }}
-                            </div>
-                            <span class="fw-bold">{{ student.name }}</span>
-                        </div>
-                    </td>
 
-                    <td class="text-muted">{{ student.roll }}</td>
+                    </tr>
 
-                    <td>
-                        <span class="fw-bold fs-5">{{ student.marks }}</span>
-                        <span class="text-muted small">/100</span>
-                    </td>
 
-                    <td style="width:120px;">
-                        <div class="progress" style="height:8px;">
-                            <div class="progress-bar"
-                                {% if student.marks >= 90 %}bg-success
-                                {% elif student.marks >= 75 %}bg-primary
-                                {% elif student.marks >= 60 %}bg-warning
-                                {% else %}bg-danger{% endif %}"
-                                style="width: {{ student.marks|default(0) }}%;">
-                            </div>
-                        </div>
-                    </td>
+                    {% endif %}
 
-                    <td class="text-center">
-                        {% if student.marks >= 90 %}
-                            <span class="badge bg-success px-3 py-2">
-                                🏆 Excellent
-                            </span>
-                        {% elif student.marks >= 75 %}
-                            <span class="badge bg-primary px-3 py-2">
-                                👍 Good
-                            </span>
-                        {% elif student.marks >= 60 %}
-                            <span class="badge bg-warning text-dark px-3 py-2">
-                                📈 Average
-                            </span>
-                        {% else %}
-                            <span class="badge bg-danger px-3 py-2">
-                                ⚠️ Needs Help
-                            </span>
-                        {% endif %}
-                    </td>
 
-                    <td class="text-center text-nowrap">
-                        <a href="{{ url_for('student_detail', id=student.id) }}"
-                           class="btn btn-sm btn-primary">
-                            View
-                        </a>
-                        <a href="{{ url_for('edit_student', id=student.id) }}"
-                           class="btn btn-sm btn-warning">
-                            Edit
-                        </a>
-                      
 
-                        <a href="{{ url_for('delete_student', id=student.id) }}"
-                           class="btn btn-sm btn-danger">
-                            Delete
-                        </a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                    </tbody>
+
+
+                </table>
+
+
+            </div>
+
+
+        </div>
+
+
     </div>
-</div>
+
 
 </div>
 
-<script>
-const searchInput = document.getElementById('searchInput');
-const allRows = document.querySelectorAll('#tableBody tr');
-const resultInfo = document.getElementById('resultInfo');
 
-searchInput.addEventListener('keyup', function() {
-    const query = this.value.toLowerCase();
-    let matchCount = 0;
-    allRows.forEach(function(row) {
-        const name = row.dataset.name || '';
-
-        if(name.includes(query)){
-            row.style.display = '';
-            matchCount++;
-        } else {
-            row.style.display = 'none';
-        }
-    });
-});
-
-</script>
 {% endblock %}

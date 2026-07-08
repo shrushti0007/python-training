@@ -1,15 +1,21 @@
-import sqlite3
+# ---------------- IMPORT DATABASE FUNCTIONS ----------------
 
-conn = sqlite3.connect('sample.db')
+from database import init_db, create_admin
 
-conn.execute('''CREATE TABLE IF NOT EXISTS students(
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT NOT NULL,
-            roll INTEGER NOT NULL,
-            marks INTEGER NOT NULL,
-            subject TEXT NOT NULL,
-            attendance INTEGER DEFAULT 0)''')
 
-conn.commit()
-conn.close()
-print("Database and table created successfully.")
+
+# ---------------- INITIALIZE DATABASE ----------------
+
+init_db()
+
+# ---------------- CREATE ADMIN USER ----------------
+
+create_admin()
+
+
+
+# ---------------- SUCCESS MESSAGE ----------------
+
+print(
+    "Database created successfully!"
+)

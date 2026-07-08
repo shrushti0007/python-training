@@ -1,85 +1,487 @@
 {% extends 'base.html' %}
-{% block title %}About — College Portal{% endblock %}
+
+{% block title %}
+About | Government Polytechnic Hingoli
+{% endblock %}
 
 {% block content %}
 
-<div class="row justify-content-center">
-    <div class="col-md-8">
+<div class="hero-section">
 
-        <!-- Main card -->
-        <div class="card shadow-sm mb-4">
-            <div class="card-header py-3"
-                 style="background-color: #1e3a5f;">
-                <h4 class="mb-0 text-white">
-                    ℹ️ About College Portal
-                </h4>
-            </div>
-            <div class="card-body p-4">
-                <p class="lead text-muted">
-                    College Portal is a student management system built
-                    with Python and Flask. It helps manage student records,
-                    marks and performance tracking.
+<div class="row align-items-center">
+
+<div class="col-lg-8">
+
+<h1 class="fw-bold text-success">
+
+🏫 About Government Polytechnic Hingoli
+
+</h1>
+
+<p class="lead mt-3">
+
+Government Polytechnic Hingoli is a Government Diploma Institute
+established in 2009 under the Directorate of Technical Education,
+Government of Maharashtra.
+
+The institute is approved by AICTE and affiliated with
+Maharashtra State Board of Technical Education (MSBTE).
+
+The college is committed to providing quality technical education,
+modern laboratories and practical learning to students.
+
+</p>
+
+</div>
+
+<div class="col-lg-4 text-center">
+
+<img src="{{ url_for('static', filename='images/college.jpg') }}"
+class="img-fluid rounded shadow">
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- College Information -->
+
+<div class="card mt-5">
+
+<div class="card-body">
+
+<h2 class="text-success">
+
+📍 College Information
+
+</h2>
+
+<hr>
+
+<p><b>College Name :</b> Government Polytechnic Hingoli</p>
+
+<p><b>Established :</b> 2009</p>
+
+<p><b>Affiliated To :</b> MSBTE</p>
+
+<p><b>Approved By :</b> AICTE</p>
+
+<p>
+
+<b>Address :</b>
+
+P-9, MIDC,
+
+Limbala Makta,
+
+Hingoli – 431513,
+
+Maharashtra.
+
+</p>
+
+<p><b>Phone :</b> 02456-252641</p>
+
+<p><b>Email :</b> gphingoli@yahoo.com</p>
+
+<p><b>Website :</b> www.gphingoli.in</p>
+
+</div>
+
+</div>
+<!-- Vision & Mission -->
+
+<div class="row mt-5">
+
+    <div class="col-md-6">
+
+        <div class="card h-100">
+
+            <div class="card-body">
+
+                <h2 class="text-success">
+
+                    🎯 Vision
+
+                </h2>
+
+                <hr>
+
+                <p>
+
+                    To develop technically competent, innovative and
+                    socially responsible diploma engineers through
+                    quality technical education and skill development.
+
                 </p>
-                <hr>
 
-                <!-- Tech stack -->
-                <h5 class="fw-bold mb-3">🛠️ Technologies Used</h5>
-                <div class="row">
-                    {% set tech = [
-                        ('🐍', 'Python 3.12', 'Programming Language', 'primary'),
-                        ('🌶️', 'Flask',       'Web Framework',        'danger'),
-                        ('🏗️', 'Jinja2',      'Template Engine',      'success'),
-                        ('🎨', 'Bootstrap 5', 'CSS Framework',        'info'),
-                    ] %}
-                    {% for icon, name, role, color in tech %}
-                    <div class="col-6 mb-3">
-                        <div class="d-flex align-items-center
-                                    p-2 rounded bg-light">
-                            <span class="fs-4 me-2">{{ icon }}</span>
-                            <div>
-                                <div class="fw-bold small">{{ name }}</div>
-                                <div class="text-muted" style="font-size:11px;">
-                                    {{ role }}
-                                </div>
-                            </div>
-                            <span class="badge bg-{{ color }} ms-auto">
-                                ✓
-                            </span>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-
-                <hr>
-
-                <!-- Features -->
-                <h5 class="fw-bold mb-3">✨ Features</h5>
-                <div class="row">
-                    {% for feature in [
-                        'Student list with marks',
-                        'Grade classification',
-                        'Performance progress bars',
-                        'Responsive design',
-                        'Professional dashboard',
-                        'Easy navigation'
-                    ] %}
-                    <div class="col-6 mb-2">
-                        <span class="text-success me-1">✅</span>
-                        <small>{{ feature }}</small>
-                    </div>
-                    {% endfor %}
-                </div>
-
-                <hr>
-                <a href="{{ url_for('home') }}"
-                   class="btn btn-lg px-4"
-                   style="background-color:#1e3a5f; color:white;">
-                    ← Back to Home
-                </a>
             </div>
+
         </div>
 
     </div>
+
+
+    <div class="col-md-6">
+
+        <div class="card h-100">
+
+            <div class="card-body">
+
+                <h2 class="text-success">
+
+                    🎯 Mission
+
+                </h2>
+
+                <hr>
+
+                <ul>
+
+                    <li>Provide quality technical education.</li>
+
+                    <li>Develop practical and professional skills.</li>
+
+                    <li>Promote innovation and entrepreneurship.</li>
+
+                    <li>Strengthen industry-institute interaction.</li>
+
+                    <li>Develop leadership and ethical values.</li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- Departments -->
+
+<div class="card mt-5">
+
+    <div class="card-body">
+
+        <h2 class="text-success">
+
+            📚 Departments
+
+        </h2>
+
+        <hr>
+
+        <div class="row">
+
+            <div class="col-md-4">
+
+                <div class="card p-3 h-100">
+
+                    <h4>💻 Computer Engineering</h4>
+
+                    <p>
+
+                        Focuses on Programming, Web Development,
+                        Database Management, Networking,
+                        Python, Java and Software Engineering.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-4">
+
+                <div class="card p-3 h-100">
+
+                    <h4>📡 Electronics & Telecommunication</h4>
+
+                    <p>
+
+                        Covers Digital Electronics,
+                        Embedded Systems,
+                        Communication Networks,
+                        IoT and Microcontrollers.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-4">
+
+                <div class="card p-3 h-100">
+
+                    <h4>⚙️ Mechanical Engineering</h4>
+
+                    <p>
+
+                        Includes CAD/CAM,
+                        Machine Design,
+                        Manufacturing Technology,
+                        Automobile Engineering
+                        and Thermal Engineering.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- Campus Facilities -->
+
+<div class="card mt-5">
+
+    <div class="card-body">
+
+        <h2 class="text-success">
+
+            🏢 Campus Facilities
+
+        </h2>
+
+        <hr>
+
+        <div class="row">
+
+            <div class="col-md-6">
+
+                <ul>
+
+                    <li>💻 Computer Laboratories</li>
+
+                    <li>📡 Electronics Laboratories</li>
+
+                    <li>⚙️ Mechanical Workshop</li>
+
+                    <li>📚 Central Library</li>
+
+                    <li>🌐 Wi-Fi Campus</li>
+
+                </ul>
+
+            </div>
+
+            <div class="col-md-6">
+
+                <ul>
+
+                    <li>🏸 Sports Ground</li>
+
+                    <li>🎤 Seminar Hall</li>
+
+                    <li>🚌 Parking Facility</li>
+
+                    <li>🏠 Hostel Facility</li>
+
+                    <li>🎓 Training & Placement Cell</li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- Achievements -->
+
+<div class="card mt-5">
+
+    <div class="card-body">
+
+        <h2 class="text-success">
+
+            🏆 Achievements
+
+        </h2>
+
+        <hr>
+
+        <div class="row">
+
+            <div class="col-md-6">
+
+                <ul>
+
+                    <li>🏅 AICTE Approved Institute</li>
+
+                    <li>📚 Affiliated to MSBTE</li>
+
+                    <li>🏫 Established in 2009</li>
+
+                    <li>💼 Strong Training & Placement Support</li>
+
+                </ul>
+
+            </div>
+
+            <div class="col-md-6">
+
+                <ul>
+
+                    <li>💡 Technical Workshops & Seminars</li>
+
+                    <li>🔬 Modern Laboratories</li>
+
+                    <li>🏆 Student Project Competitions</li>
+
+                    <li>🌱 Skill Development Programs</li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- Training & Placement -->
+
+<div class="card mt-5">
+
+    <div class="card-body">
+
+        <h2 class="text-success">
+
+            🎓 Training & Placement Cell
+
+        </h2>
+
+        <hr>
+
+        <p>
+
+            The Training & Placement Cell helps students prepare for
+            employment by organizing campus interviews, industrial visits,
+            internships, aptitude training, personality development,
+            resume writing workshops and mock interviews.
+
+        </p>
+
+        <div class="row">
+
+            <div class="col-md-6">
+
+                <ul>
+
+                    <li>✔ Campus Placement Drives</li>
+
+                    <li>✔ Internship Opportunities</li>
+
+                    <li>✔ Industrial Visits</li>
+
+                    <li>✔ Career Guidance</li>
+
+                </ul>
+
+            </div>
+
+            <div class="col-md-6">
+
+                <ul>
+
+                    <li>✔ Aptitude Training</li>
+
+                    <li>✔ Resume Building</li>
+
+                    <li>✔ Mock Interviews</li>
+
+                    <li>✔ Personality Development</li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- Principal -->
+
+<div class="card mt-5">
+
+    <div class="card-body text-center">
+
+        <h2 class="text-success">
+
+            👨‍🏫 Principal
+
+        </h2>
+
+        <hr>
+
+        <h4>
+
+            B. P. Deosarkar Sir
+
+        </h4>
+
+        <p class="mt-3">
+
+            <i>
+
+                "Empowering Students with Technical Knowledge,
+                Skills and Innovation."
+
+            </i>
+
+        </p>
+
+    </div>
+
+</div>
+
+
+
+<!-- Google Map -->
+
+<div class="card mt-5 mb-5">
+
+    <div class="card-body">
+
+        <h2 class="text-success">
+
+            📍 College Location
+
+        </h2>
+
+        <hr>
+
+        <iframe
+            src="https://www.google.com/maps?q=Government+Polytechnic+Hingoli&output=embed"
+            width="100%"
+            height="350"
+            style="border:0;border-radius:10px;"
+            loading="lazy">
+        </iframe>
+
+    </div>
+
 </div>
 
 {% endblock %}

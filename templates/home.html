@@ -1,136 +1,557 @@
 {% extends 'base.html' %}
-{% block title %}Home — College Portal{% endblock %}
+
+{% block title %}
+Home | Government Polytechnic Hingoli
+{% endblock %}
 
 {% block content %}
 
-<!-- Hero Section — professional banner -->
-<div class="hero-section p-5 mb-4">
-    <div class="row align-items-center">
-        <div class="col-md-8">
-            <h1 class="display-5 fw-bold mb-2">
-                Welcome to College Portal 🎓
-            </h1>
-            <p class="fs-5 opacity-75 mb-3">
-                Manage student records, marks and results —
-                all in one place.
-            </p>
-            <a href="{{ url_for('students_page') }}"
-               class="btn btn-light btn-lg px-4 me-2">
-                View Students →
-            </a>
-            <a href="{{ url_for('about') }}"
-               class="btn btn-outline-light btn-lg px-4">
-                About
-            </a>
-        </div>
-        <div class="col-md-4 text-center d-none d-md-block">
-            <span style="font-size: 120px;">📚</span>
-        </div>
-    </div>
-</div>
+<!-- Hero Section -->
 
-<!-- Stats Row -->
-<div class="row mb-4">
+<div class="hero-section">
 
-    <div class="col-md-4 mb-3">
-        <div class="card stat-card p-3 bg-primary bg-opacity-10">
-            <div class="d-flex align-items-center">
-                <span style="font-size:40px;">👨‍🎓</span>
-                <div class="ms-3">
-                    <h2 class="fw-bold text-primary mb-0">
-                        {{ students|length }}
-                    </h2>
-                    <p class="text-muted mb-0">Total Students</p>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="row align-items-center">
 
-    <div class="col-md-4 mb-3">
-        <div class="card stat-card p-3 bg-success bg-opacity-10">
-            <div class="d-flex align-items-center">
-                <span style="font-size:40px;">✅</span>
-                <div class="ms-3">
-                    {% set passed = students|selectattr('marks','ge',60)|list %}
-                    <h2 class="fw-bold text-success mb-0">
-                        {{ passed|length }}
-                    </h2>
-                    <p class="text-muted mb-0">Passed</p>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="col-lg-7">
 
-    <div class="col-md-4 mb-3">
-        <div class="card stat-card p-3 bg-warning bg-opacity-10">
-            <div class="d-flex align-items-center">
-                <span style="font-size:40px;">⭐</span>
-                <div class="ms-3">
-                    {% set excellent = students|selectattr('marks','ge',90)|list %}
-                    <h2 class="fw-bold text-warning mb-0">
-                        {{ excellent|length }}
-                    </h2>
-                    <p class="text-muted mb-0">Excellent</p>
-                </div>
-            </div>
-        </div>
-    </div>
+<h1 class="display-5 fw-bold text-success">
+
+🏫 Welcome to
+<br>
+Government Polytechnic Hingoli
+
+</h1>
+
+<p class="lead mt-3">
+
+Government Polytechnic Hingoli is one of the leading Government Diploma
+Institutes in Maharashtra, providing quality technical education,
+modern laboratories and industry-oriented learning.
+
+</p>
+
+<a href="{{ url_for('students_page') }}"
+class="btn btn-primary btn-lg mt-3">
+
+👨‍🎓 View Students
+
+</a>
+
+<a href="{{ url_for('about') }}"
+class="btn btn-outline-primary btn-lg mt-3 ms-2">
+
+ℹ️ About College
+
+</a>
 
 </div>
 
-<!-- Section heading -->
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <h4 class="fw-bold mb-0">Student Overview</h4>
-    <a href="{{ url_for('students_page') }}"
-       class="btn btn-sm btn-outline-primary">
-        View All →
-    </a>
+<div class="col-lg-5 text-center">
+
+<img src="{{ url_for('static', filename='images/college.jpg') }}"
+class="img-fluid rounded shadow"
+alt="Government Polytechnic Hingoli">
+
 </div>
 
-<!-- Student Cards — improved -->
+</div>
+
+</div>
+
+
+<!-- College Information -->
+
+<div class="card mt-5">
+
+<div class="card-body">
+
+<h2 class="text-success">
+
+📍 College Information
+
+</h2>
+
+<hr>
+
+<p>
+
+<b>🏫 College Name :</b>
+Government Polytechnic Hingoli
+
+</p>
+
+<p>
+
+<b>📍 Address :</b><br>
+
+P-9, MIDC,<br>
+
+Limbala Makta,<br>
+
+Hingoli – 431513,<br>
+
+Maharashtra, India.
+
+</p>
+
+<p>
+
+<b>📞 Contact :</b>
+
+02456-252641
+
+</p>
+
+<p>
+
+<b>📧 Email :</b>
+
+gphingoli@yahoo.com
+
+</p>
+
+<p>
+
+<b>🌐 Website :</b>
+
+www.gphingoli.in
+
+</p>
+
+<p>
+
+<b>🕘 Office Hours :</b>
+
+Monday – Saturday
+10:00 AM – 5:45 PM
+
+</p>
+
+</div>
+
+</div>
+
+
+<!-- Departments -->
+
+<div class="mt-5">
+
+<h2 class="text-success text-center">
+
+📚 Departments
+
+</h2>
+
+<hr>
+
 <div class="row">
-    {% for student in students %}
-    <div class="col-12 col-md-6 col-lg-3 mb-3">
-        <div class="card student-card h-100">
 
-            <!-- Card header with roll number -->
-            <div class="card-header py-2"
-                 style="background-color: #1e3a5f; color:white;">
-                <small class="fw-bold">Roll No: {{ student.roll }}</small>
-            </div>
+<div class="col-md-4">
+
+<div class="card h-100">
+
+<div class="card-body">
+
+<h4>💻 Computer Engineering</h4>
+
+<p>
+
+Programming,
+Python,
+Java,
+Web Development,
+DBMS,
+Networking,
+Software Engineering.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+<div class="col-md-4">
+
+    <div class="card h-100">
+
+        <div class="card-body">
+
+            <h4>📡 Electronics & Telecommunication Engineering</h4>
+
+            <p>
+
+                Digital Electronics,
+                Embedded Systems,
+                Microcontrollers,
+                Communication Engineering,
+                Internet of Things (IoT),
+                Signal Processing.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<div class="col-md-4">
+
+    <div class="card h-100">
+
+        <div class="card-body">
+
+            <h4>⚙️ Mechanical Engineering</h4>
+
+            <p>
+
+                CAD/CAM,
+                Machine Design,
+                Manufacturing Technology,
+                Automobile Engineering,
+                Thermal Engineering,
+                Production Technology.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- Vision & Mission -->
+
+<div class="row mt-5">
+
+    <div class="col-md-6">
+
+        <div class="card h-100">
 
             <div class="card-body">
-                <h5 class="card-title fw-bold">{{ student.name }}</h5>
 
-                <!-- Progress bar for marks -->
-                <p class="card-text text-muted small mb-1">
-                    Marks: <strong>{{ student.marks }}/100</strong>
+                <h3 class="text-success">🎯 Vision</h3>
+
+                <p>
+
+                    To develop skilled, innovative and responsible
+                    diploma engineers capable of contributing to
+                    society and industry through quality technical
+                    education.
+
                 </p>
-                <div class="progress mb-3" style="height:8px;">
-                    <div class="progress-bar
-                        {% if student.marks >= 90 %}bg-success
-                        {% elif student.marks >= 75 %}bg-primary
-                        {% elif student.marks >= 60 %}bg-warning
-                        {% else %}bg-danger{% endif %}"
-                        style="width: {{ student.marks }}%">
-                    </div>
-                </div>
 
-                <!-- Badge -->
-                {% if student.marks >= 90 %}
-                    <span class="badge bg-success">🏆 Excellent</span>
-                {% elif student.marks >= 75 %}
-                    <span class="badge bg-primary">👍 Good</span>
-                {% elif student.marks >= 60 %}
-                    <span class="badge bg-warning text-dark">📈 Average</span>
-                {% else %}
-                    <span class="badge bg-danger">⚠️ Needs Help</span>
-                {% endif %}
             </div>
 
         </div>
+
     </div>
-    {% endfor %}
+
+
+
+    <div class="col-md-6">
+
+        <div class="card h-100">
+
+            <div class="card-body">
+
+                <h3 class="text-success">🎯 Mission</h3>
+
+                <ul>
+
+                    <li>Provide Quality Technical Education</li>
+
+                    <li>Develop Practical & Technical Skills</li>
+
+                    <li>Promote Innovation & Entrepreneurship</li>
+
+                    <li>Enhance Industry Interaction</li>
+
+                    <li>Develop Professional Ethics & Leadership</li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- Campus Facilities -->
+
+<div class="card mt-5">
+
+    <div class="card-body">
+
+        <h2 class="text-success">
+
+            🏢 Campus Facilities
+
+        </h2>
+
+        <hr>
+
+        <div class="row">
+
+            <div class="col-md-6">
+
+                <ul>
+
+                    <li>💻 Computer Laboratories</li>
+
+                    <li>📡 Electronics Laboratories</li>
+
+                    <li>⚙️ Mechanical Workshop</li>
+
+                    <li>📚 Central Library</li>
+
+                    <li>🌐 Wi-Fi Campus</li>
+
+                </ul>
+
+            </div>
+
+            <div class="col-md-6">
+
+                <ul>
+
+                    <li>🏸 Sports Ground</li>
+
+                    <li>🎤 Seminar Hall</li>
+
+                    <li>🚌 Parking Facility</li>
+
+                    <li>🏠 Boys & Girls Hostel</li>
+
+                    <li>🎓 Training & Placement Cell</li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- Achievements -->
+
+<div class="card mt-5">
+
+    <div class="card-body">
+
+        <h2 class="text-success">
+
+            🏆 Achievements
+
+        </h2>
+
+        <hr>
+
+        <div class="row">
+
+            <div class="col-md-6">
+
+                <ul>
+
+                    <li>🏅 AICTE Approved Institute</li>
+
+                    <li>📚 Affiliated to MSBTE</li>
+
+                    <li>🏫 Established in 2009</li>
+
+                    <li>💼 Training & Placement Support</li>
+
+                </ul>
+
+            </div>
+
+            <div class="col-md-6">
+
+                <ul>
+
+                    <li>💡 Technical Workshops & Seminars</li>
+
+                    <li>🔬 Modern Laboratories</li>
+
+                    <li>🏆 Student Project Competitions</li>
+
+                    <li>🌱 Skill Development Activities</li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- Training & Placement -->
+
+<div class="card mt-5">
+
+    <div class="card-body">
+
+        <h2 class="text-success">
+
+            🎓 Training & Placement Cell
+
+        </h2>
+
+        <hr>
+
+        <div class="row">
+
+            <div class="col-md-6">
+
+                <ul>
+
+                    <li>✔ Campus Placement Drives</li>
+
+                    <li>✔ Industrial Visits</li>
+
+                    <li>✔ Internship Opportunities</li>
+
+                    <li>✔ Career Guidance</li>
+
+                </ul>
+
+            </div>
+
+            <div class="col-md-6">
+
+                <ul>
+
+                    <li>✔ Resume Building</li>
+
+                    <li>✔ Aptitude Training</li>
+
+                    <li>✔ Mock Interviews</li>
+
+                    <li>✔ Personality Development</li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- Student Statistics -->
+
+<div class="row mt-5">
+
+    <div class="col-md-4">
+
+        <div class="card text-center p-4">
+
+            <h1 class="text-primary">
+
+                {{ total }}
+
+            </h1>
+
+            <h5>Total Students</h5>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="col-md-4">
+
+        <div class="card text-center p-4">
+
+            <h1 class="text-success">
+
+                {{ passed }}
+
+            </h1>
+
+            <h5>Passed Students</h5>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="col-md-4">
+
+        <div class="card text-center p-4">
+
+            <h1 class="text-warning">
+
+                {{ excellent }}
+
+            </h1>
+
+            <h5>Excellent Students</h5>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- Principal -->
+
+<div class="card mt-5 mb-5">
+
+    <div class="card-body text-center">
+
+        <h2 class="text-success">
+
+            👨‍🏫 Principal
+
+        </h2>
+
+        <hr>
+
+        <h4>
+
+            B. P. Deosarkar Sir
+
+        </h4>
+
+        <p class="mt-3">
+
+            <i>
+
+                "Empowering Students with Technical Knowledge,
+                Skills and Innovation."
+
+            </i>
+
+        </p>
+
+    </div>
+
 </div>
 
 {% endblock %}

@@ -1,55 +1,201 @@
-{% extends 'base.html' %}
-{% block title %}Student Detail — College Portal{% endblock %}
+{% extends "base.html" %}
+
+{% block title %}
+Student Details — Government Polytechnic Hingoli
+{% endblock %}
+
 
 {% block content %}
 
-<div class="row justify-content-center">
-    <div class="col-md-6">
+<div class="container mt-4">
 
-        <!-- Detail card -->
-        <div class="card shadow-sm mb-4">
-            <div class="card-header py-3"
-                 style="background-color: #5f3f1e;">
-                <h4 class="mb-0 text-white">
-                    👤 Student Detail
-                </h4>
-            </div>
-            <div class="card-body p-4">
-                <!-- Avatar -->
-                 <div class="text-center mb-4">
-                    <div class="avatar rounded-circle bg-secondary text-white
-                                d-inline-flex align-items-center justify-content-center"
-                         style="width: 80px; height: 80px; font-size: 30px;">
-                        {{ student['name'][0]|upper }}
-                    </div>
-                    <h3 class="fw-bold">{{ student['name'] }} </h3>
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+
+        <h2>
+            <i class="bi bi-person-vcard"></i>
+            Student Details
+        </h2>
+
+
+        <a href="/students" class="btn btn-secondary">
+
+            <i class="bi bi-arrow-left"></i>
+            Back
+
+        </a>
+
+    </div>
+
+
+
+    <div class="card shadow">
+
+        <div class="card-header">
+
+            <h5 class="mb-0">
+                Student Information
+            </h5>
+
+        </div>
+
+
+
+        <div class="card-body">
+
+
+            <div class="row">
+
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="fw-bold">
+                        Student Name
+                    </label>
+
+                    <p class="form-control">
+                        {{ student['name'] }}
+                    </p>
+
                 </div>
 
-                <!-- Details -->
-                 <table class="table table-borderless">
-                    <tr>
-                        <th class="text-muted fw-bold">Roll Number:</th>
-                        <td>{{ student['roll'] }}</td>
-                    </tr>
-                    <tr>
-                        <td class="text-muted fw-bold">Marks:</td>
-                        <td>{{ student['marks'] }}</td>
 
-                        <!--Progress bar-->
-                        <div class="progress mt-2" style="height:8px;">
-                            <div class="progress-bar
-                                {% if student['marks'] >= 90 %}bg-success
-                                {% elif student['marks'] >= 75 %}bg-primary
-                                {% elif student['marks'] >= 60 %}bg-warning
-                                {% else %}bg-danger{% endif %}"
-                                style="width: 50%;">
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="fw-bold">
+                        Roll Number
+                    </label>
+
+                    <p class="form-control">
+                        {{ student['roll'] }}
+                    </p>
+
+                </div>
+                                <div class="col-md-6 mb-3">
+
+                    <label class="fw-bold">
+                        Subject
+                    </label>
+
+                    <p class="form-control">
+                        {{ student['subject'] }}
+                    </p>
+
+                </div>
+
+
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="fw-bold">
+                        Marks
+                    </label>
+
+                    <p class="form-control">
+                        {{ student['marks'] }}
+                    </p>
+
+                </div>
+
+
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="fw-bold">
+                        Attendance
+                    </label>
+
+                    <p class="form-control">
+                        {{ student['attendance'] }} %
+                    </p>
+
+                </div>
+
+
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="fw-bold">
+                        Department
+                    </label>
+
+                    <p class="form-control">
+                        Computer Engineering
+                    </p>
+
+                </div>
+
+
+
+                <div class="col-md-12 mb-3">
+
+                    <label class="fw-bold">
+                        Performance
+                    </label>
+
+
+                    {% if student['marks']|int >= 75 %}
+
+                        <p class="badge bg-success p-2">
+                            Excellent
+                        </p>
+
+
+                    {% elif student['marks']|int >= 40 %}
+
+                        <p class="badge bg-warning text-dark p-2">
+                            Passed
+                        </p>
+
+
+                    {% else %}
+
+                        <p class="badge bg-danger p-2">
+                            Needs Improvement
+                        </p>
+
+
+                    {% endif %}
+
+
+                </div>
                             </div>
-                        </div>
-                    </tr>   
-                    </table>
-            </div>
+
+
         </div>
+
+
+        <div class="card-footer text-center">
+
+
+            <a href="/edit_student/{{ student['id'] }}" 
+               class="btn btn-primary me-2">
+
+                <i class="bi bi-pencil-square"></i>
+                Edit Student
+
+            </a>
+
+
+
+            <a href="/delete_student/{{ student['id'] }}"
+               class="btn btn-danger"
+               onclick="return confirm('Are you sure you want to delete this student?');">
+
+                <i class="bi bi-trash"></i>
+                Delete Student
+
+            </a>
+
+
+        </div>
+
+
     </div>
+
+
 </div>
+
 
 {% endblock %}

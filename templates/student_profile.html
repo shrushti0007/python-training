@@ -1,0 +1,438 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+Student Profile — Government Polytechnic Hingoli
+{% endblock %}
+
+
+
+{% block content %}
+
+
+<div class="container mt-4">
+
+
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+
+
+        <h2>
+
+            <i class="bi bi-person-circle"></i>
+            Student Profile
+
+        </h2>
+
+
+
+        <a href="/students" class="btn btn-secondary">
+
+
+            <i class="bi bi-arrow-left"></i>
+            Back to Students
+
+
+        </a>
+
+
+    </div>
+
+
+
+
+    <div class="card shadow">
+
+
+
+        <div class="card-header">
+
+
+            <h5 class="mb-0">
+
+                Student Information
+
+            </h5>
+
+
+        </div>
+
+
+
+
+        <div class="card-body">
+
+
+
+            <div class="row">
+
+
+
+                <div class="col-md-4 text-center mb-3">
+
+
+                    <div class="rounded-circle bg-primary text-white 
+                                d-flex align-items-center justify-content-center mx-auto"
+                         style="width:120px;height:120px;font-size:50px;">
+
+
+                        {{ student['name'][0] }}
+
+
+                    </div>
+
+
+
+                    <h4 class="mt-3">
+
+                        {{ student['name'] }}
+
+                    </h4>
+
+
+                    <p class="text-muted">
+
+                        Computer Engineering
+
+                    </p>
+
+
+
+                </div>
+
+
+
+
+
+                <div class="col-md-8">
+
+
+                    <div class="row">
+
+
+
+                        <div class="col-md-6 mb-3">
+
+
+                            <label class="fw-bold">
+
+                                Roll Number
+
+                            </label>
+
+
+                            <p class="form-control">
+
+                                {{ student['roll'] }}
+
+                            </p>
+
+
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+
+
+                            <label class="fw-bold">
+
+                                Subject
+
+                            </label>
+
+
+                            <p class="form-control">
+
+                                {{ student['subject'] }}
+
+                            </p>
+
+
+                        </div>
+
+
+
+
+
+                        <div class="col-md-6 mb-3">
+
+
+                            <label class="fw-bold">
+
+                                Marks
+
+                            </label>
+
+
+                            <p class="form-control">
+
+                                {{ student['marks'] }}
+
+                            </p>
+
+
+                        </div>
+
+
+
+
+
+                        <div class="col-md-6 mb-3">
+
+
+                            <label class="fw-bold">
+
+                                Attendance
+
+                            </label>
+
+
+                            <p class="form-control">
+
+                                {{ student['attendance'] }} %
+
+                            </p>
+
+
+                        </div>
+
+
+
+
+
+                        <div class="col-md-6 mb-3">
+
+
+                            <label class="fw-bold">
+
+                                Department
+
+                            </label>
+
+
+                            <p class="form-control">
+
+                                Computer Engineering
+
+                            </p>
+
+
+                        </div>
+
+
+
+
+                    </div>
+
+
+
+
+                    <hr>
+
+
+
+
+                    <h5 class="mb-3">
+
+                        Academic Performance
+
+                    </h5>
+
+
+
+                    <div class="row">
+
+
+
+                        <div class="col-md-4">
+
+
+                            <div class="card text-center shadow-sm">
+
+
+                                <div class="card-body">
+
+
+                                    <h3>
+
+                                        {{ student['marks'] }}
+
+                                    </h3>
+
+
+                                    <p class="mb-0">
+
+                                        Total Marks
+
+                                    </p>
+
+
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+
+
+
+
+                        <div class="col-md-4">
+
+
+                            <div class="card text-center shadow-sm">
+
+
+                                <div class="card-body">
+
+
+                                    <h3>
+
+                                        {{ student['attendance'] }}%
+
+                                    </h3>
+
+
+                                    <p class="mb-0">
+
+                                        Attendance
+
+                                    </p>
+
+
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+                        
+                        <div class="col-md-4">
+
+
+                            <div class="card text-center shadow-sm">
+
+
+                                <div class="card-body">
+
+
+                                    <h3>
+
+
+                                    {% if student['marks']|int >= 75 %}
+
+                                        🏆
+
+
+                                    {% elif student['marks']|int >= 40 %}
+
+                                        ✅
+
+
+                                    {% else %}
+
+                                        ⚠️
+
+
+                                    {% endif %}
+
+
+                                    </h3>
+
+
+
+                                    <p class="mb-0">
+
+
+                                    {% if student['marks']|int >= 75 %}
+
+                                        Excellent
+
+
+                                    {% elif student['marks']|int >= 40 %}
+
+                                        Passed
+
+
+                                    {% else %}
+
+                                        Needs Improvement
+
+
+                                    {% endif %}
+
+
+                                    </p>
+
+
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+
+
+
+                    </div>
+
+
+
+                </div>
+
+
+            </div>
+
+
+
+        </div>
+
+
+
+        <div class="card-footer text-center">
+
+
+
+            <a href="/edit_student/{{ student['id'] }}" 
+               class="btn btn-primary me-2">
+
+
+                <i class="bi bi-pencil-square"></i>
+
+                Edit Profile
+
+
+            </a>
+
+
+
+
+            <a href="/delete_student/{{ student['id'] }}"
+               class="btn btn-danger"
+               onclick="return confirm('Are you sure you want to delete this student?');">
+
+
+                <i class="bi bi-trash"></i>
+
+                Delete Student
+
+
+            </a>
+
+
+
+        </div>
+
+
+
+    </div>
+
+
+
+</div>
+
+
+
+{% endblock %}

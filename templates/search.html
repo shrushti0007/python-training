@@ -1,89 +1,359 @@
 {% extends "base.html" %}
-{% block title %}Search Results — College Portal{% endblock %}
+
+{% block title %}
+Search Results — Government Polytechnic Hingoli
+{% endblock %}
+
 
 {% block content %}
 
+
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2 class = "fw-bold mb-1">Search Results</h2>
-    <a href = "{{url_for('students_page')}}" class = "btn btn-secondary btn-sm">
-        ← All Students
-        </a>
+
+<h2 class="fw-bold mb-0">
+🔍 Student Search Results
+</h2>
+
+
+<a href="{{ url_for('students_page') }}"
+class="btn btn-outline-secondary">
+
+← All Students
+
+</a>
+
+
 </div>
+
+
+
+
 
 {% if query %}
-<div class = "alert alert-info justify-content-between align-items-center align-items-center">
-    <span>
-        <strong>{{query}}</strong>
-        <strong>{{students|length}}</strong> results
-    </span>
-    <a href = "{{url_for('search')}}" class = "btn btn-secondary btn-sm">
-    Clear
-    </a>
+
+<div class="alert alert-info d-flex justify-content-between align-items-center">
+
+<div>
+
+Searching for:
+
+<strong>{{ query }}</strong>
+
+<br>
+
+Found 
+<strong>{{ students|length }}</strong>
+student(s)
+
 </div>
+
+
+<a href="{{ url_for('search') }}"
+class="btn btn-sm btn-secondary">
+
+Clear
+
+</a>
+
+
+</div>
+
 {% endif %}
-<!-- Results -->
+
+
+
+
+
 
 {% if students %}
-<div class="card shadow-sm">
-    <div class="card-body p-0">
-        <div class="table-responsive">
-            <table class="table table-hover mb-0">
-                <thead style="background-color: #1e3a5f; color:white;">
-                    <tr>
-                        <th class="py-3 ps-4">#</th>
-                        <th class="py-3">Name</th>
-                        <th class="py-3">Roll Number</th>
-                        <th class="py-3">Marks</th>
-                        <th class="py-3">Grade</th>
-                        <th class="py-3 text-center">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for student in students %}
-                    <tr class="align-middle">
-                        <td class="ps-4 text-muted">
-                            {{ loop.index }}
-                        </td>
-                        <td>
-                            <div class="d-flex align-items-center">
-                                <div class="rounded-circle d-flex justify-content-center align-items-center me-2"
-                                     style="width:30px; height:30px; background-color:#1e3a5f; color:white;">
-                                    {{ student['name'][0] }}
-                                </div>
-                                <span class="fw-bold">{{ student['name'] }}</span>
-                            </div>
-                        </td>
-                        <td class="text-muted">{{ student['roll'] }}</td>
-                            <td>
-                                <span class="fw-bold fs-5">{{ student['marks'] }}</span>
-                                <span class="text-muted small">/100</span>
-                            </td>
-                            <td class="text-center">
-                                {% if student['marks'] >= 90 %}
-                                    <span class="badge bg-success px-3 py-2">
-                                        🏆 Excellent
-                                    </span>
-                                {% elif student['marks'] >= 75 %}
-                                    <span class="badge bg-primary px-3 py-2">
-                                        👍 Good
-                                    </span>
-                                {% elif student['marks'] >= 60 %}
-                                    <span class="badge bg-warning text-dark px-3 py-2">
-                                        📈 Average
-                                    </span>
-                                {% else %}
-                                    <span class="badge bg-danger px-3 py-2">
-                                        ⚠️ Needs Help
-                                    </span>
-                                {% endif %}
-                            </td>
-                            
-                        </tr>
-                        {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
+
+
+<div class="card shadow-sm border-0">
+
+
+<div class="card-header text-white py-3"
+style="background:#1e3a5f;">
+
+
+<h5 class="mb-0">
+
+🎓 Government Polytechnic Hingoli Students
+
+</h5>
+
+
 </div>
-{% endif %} 
+
+
+
+
+
+<div class="card-body p-0">
+
+
+<div class="table-responsive">
+
+
+<table class="table table-hover mb-0">
+
+
+<thead class="table-light">
+
+<tr>
+
+<th class="ps-4">
+#
+</th>
+
+<th>
+Student Name
+</th>
+
+<th>
+Roll No
+</th>
+
+<th>
+Subject
+</th>
+
+<th>
+Marks
+</th>
+
+<th>
+Attendance
+</th>
+
+<th>
+Performance
+</th>
+
+<th>
+Action
+</th>
+
+</tr>
+
+
+</thead>
+
+
+
+
+
+<tbody>
+
+
+{% for student in students %}
+
+
+<tr class="align-middle">
+
+
+<td class="ps-4 text-muted">
+
+{{ loop.index }}
+
+</td>
+
+
+
+
+<td>
+
+
+<div class="d-flex align-items-center">
+
+
+<div class="rounded-circle d-flex 
+align-items-center justify-content-center me-2"
+
+style="
+width:35px;
+height:35px;
+background:#2d6a9f;
+color:white;
+">
+
+
+{{ student['name'][0]|upper }}
+
+
+</div>
+
+
+
+<b>
+{{ student['name'] }}
+</b>
+
+
+</div>
+
+
+</td>
+
+
+
+
+
+
+<td>
+
+{{ student['roll'] }}
+
+</td>
+
+
+
+
+<td>
+
+{{ student['subject'] }}
+
+</td>
+
+
+
+
+
+<td>
+
+
+<strong>
+{{ student['marks'] }}
+</strong>
+
+/100
+
+
+</td>
+
+
+
+
+
+<td>
+
+
+{{ student['attendance'] }}%
+
+
+</td>
+
+
+
+
+
+
+<td>
+
+
+{% if student['marks'] >= 90 %}
+
+<span class="badge bg-success">
+🏆 Excellent
+</span>
+
+
+{% elif student['marks'] >= 75 %}
+
+
+<span class="badge bg-primary">
+👍 Good
+</span>
+
+
+{% elif student['marks'] >= 60 %}
+
+
+<span class="badge bg-warning text-dark">
+📈 Average
+</span>
+
+
+{% else %}
+
+
+<span class="badge bg-danger">
+⚠️ Need Improvement
+</span>
+
+
+{% endif %}
+
+
+</td>
+
+
+
+
+
+<td>
+
+
+<a href="{{ url_for('student_detail', id=student['id']) }}"
+
+class="btn btn-sm btn-outline-primary">
+
+View
+
+</a>
+
+
+</td>
+
+
+
+
+
+</tr>
+
+
+{% endfor %}
+
+
+</tbody>
+
+
+</table>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+{% else %}
+
+
+<div class="alert alert-warning text-center">
+
+<h5>
+😔 No Students Found
+</h5>
+
+<p class="mb-0">
+
+Try searching with another name, roll number or subject.
+
+</p>
+
+
+</div>
+
+
+{% endif %}
+
+
+
+
 {% endblock %}
