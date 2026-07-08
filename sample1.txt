@@ -1,4 +1,4 @@
- @app.route('/')
+@app.route('/')
 def home():
     student_name = "Rahul"
     return render_template('home.html', name=student_name)
@@ -27,9 +27,62 @@ if 'username' not in session:
     flash('Please login first!', 'warning')
     return redirect(url_for('login'))
 
+Database Relationship - Join
+Student Excel Sheet 1
+Name - Stream
+Shivam - 1
+Pallavi - 3
+Dhaneshree - 4
+Kaveri - 1
+Pratiksha - 2
+
+Excel Sheet 2 -
+1 - Computer Eng
+2 - Information Technology
+3 - Mechanical Engineering
+4 - Electrical Engineering
 
 
+Role - Full Stack Engineering
+Front end - React js, Angular JS - HTML, JavaScript, Python Flask
+Middleware - Node JS, Python Fast API
+Backend - Database - Oracle, SQL, Postgres, Mongo DB
 
+pip freeze > requirements.txt
+
+For Deployment -
+https://www.pythonanywhere.com/
+
+To remove github repo if required
+cd ..
+rm -rf python-training
+
+git clone https://github.com/freakytejash/python-training.git
+
+Commands to use in python any where bash -
+mkvirtualenv myenv --python=python3.10
+cd python-training
+pip install -r requirements.txt
+
+Set virtual environment on Python Anywhere
+/home/tejashmehta/.virtualenvs/myenv
+
+
+Configuration on WSGI file - 
+import sys
+
+path = '/home/tejashmehta/python-training'
+if path not in sys.path:
+    sys.path.append(path)
+
+from app import app as application
+
+To do the changes in your website -
+commit your code then take the pull
+git pull
+
+To check where your database is created on pythonanywhere
+find /home/$(whoami) -name "*.db" 2>/dev/null
 
 
 

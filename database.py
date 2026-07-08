@@ -1,22 +1,20 @@
-import os
 import sqlite3
+from pathlib import Path
 from flask import Flask, render_template, request, flash
-app = Flask(__name__)
-app.secret_key = "linkkiwi2026"  # Needed for flashing messages 
 
-#Absoulute path - Always with app.py folder
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DB_PATH = os.path.join(BASE_DIR, 'myproject.db')
+app = Flask(__name__)
+app.secret_key = "linkkiwi2026"
+BASE_DIR = Path(__file__).resolve().parent
+DB_PATH = BASE_DIR / "myproject.db"
+
 # 2 functions
 def get_db():
-   """Database connection""" 
-   conn = sqlite3.connect(DB_PATH)
-   conn.row_factory = sqlite3.Row  # To access columns by name
-   return conn
+    """Database connection"""
+    conn = sqlite3.connect(DB_PATH)
+    conn.row_factory = sqlite3.Row
+    return conn
 
 def init_db():
-    
-    
     
     
     """Create table"""""
