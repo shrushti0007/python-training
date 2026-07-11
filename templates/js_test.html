@@ -1,53 +1,185 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <title>JavaScript Test</title>
-</head>
+{% extends "base.html" %}
 
 
-<body>
-
-
-<h1 id="myHeading">
-    Hello
-</h1>
-
-
-<!-- JavaScript will change heading text when button is clicked -->
-
-
-<button id="mybutton">
-    Click Me
-</button>
+{% block title %}
+JavaScript Test — Government Polytechnic Hingoli
+{% endblock %}
 
 
 
+{% block content %}
 
 
+
+<div class="container mt-4">
+
+
+
+    <div class="card shadow">
+
+
+
+        <div class="card-header text-center">
+
+
+            <h3>
+
+                🧪 JavaScript Test Page
+
+            </h3>
+
+
+        </div>
+
+
+
+
+
+        <div class="card-body">
+
+
+
+            <h5>
+
+                Student Portal JavaScript Practice
+
+            </h5>
+
+
+
+            <p>
+
+                खालील button click करून JavaScript test करा.
+
+            </p>
+
+
+
+
+
+            <button 
+                class="btn btn-primary"
+                onclick="showMessage()">
+
+
+                Click Me
+
+
+            </button>
+
+
+
+
+            <div class="mt-4">
+
+
+                <h5 id="result">
+
+
+                </h5>
+
+
+            </div>
+            
+            <hr>
+
+
+
+            <h5>
+
+                Student Name Check
+
+            </h5>
+
+
+
+            <input 
+                type="text"
+                id="studentName"
+                class="form-control"
+                placeholder="Enter student name">
+
+
+
+
+
+            <button
+                class="btn btn-success mt-3"
+                onclick="checkStudent()">
+
+
+
+                Check Name
+
+
+
+            </button>
+
+
+
+            <p 
+                id="nameResult"
+                class="mt-3 fw-bold">
+
+
+            </p>
+
+
+
+        </div>
+
+
+
+    </div>
+    
 <script>
 
 
-// Step 1: Select heading element using ID
-
-const heading = document.getElementById("myHeading");
+function showMessage(){
 
 
-// Step 2: Select button element
-
-const button = document.getElementById("mybutton");
-
+    document.getElementById("result").innerHTML =
+    "✅ JavaScript is working successfully!";
 
 
-// Step 3: Add click event
-
-button.addEventListener("click", function(){
+}
 
 
-    heading.textContent = "Welcome to JavaScript!";
 
 
-});
+function checkStudent(){
+
+
+    let name = document.getElementById(
+        "studentName"
+    ).value;
+
+
+
+    if(name == ""){
+
+
+        document.getElementById(
+            "nameResult"
+        ).innerHTML =
+        "⚠️ Please enter student name";
+
+
+    }
+
+    else{
+
+
+        document.getElementById(
+            "nameResult"
+        ).innerHTML =
+        "Welcome, " + name + " 🎓";
+
+
+    }
+
+
+}
 
 
 
@@ -55,6 +187,5 @@ button.addEventListener("click", function(){
 
 
 
-</body>
 
-</html>
+{% endblock %}

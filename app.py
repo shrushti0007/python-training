@@ -1,56 +1,60 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, session
+from flask import Flask, render_template, request, redirect, url_for, flash, session, abort
+from werkzeug.security import generate_password_hash, check_password_hash
 from database import get_db, init_db
 
-
 app = Flask(__name__)
+app.secret_key = "linkkiwi2026"
 
-app.secret_key = "polytechnic_hingoli_secret_key"
+# Initialize database
+init_db()
 
 
-
-# ---------------- HOME PAGE ----------------
-
+# ==========================
+# HOME PAGE
+# ==========================
 @app.route("/")
 def home():
-
-    return render_template(
-        "home.html"
-    )
-
-
-
-# ---------------- ABOUT PAGE ----------------
-
-@app.route("/about")
-def about():
-
-    return render_template(
-        "about.html"
-    )
-
-# ---------------- SUBJECTS PAGE ----------------
-
-@app.route("/subjects")
-def subjects():
-
-    return render_template(
-        "subjects.html"
-    )
-
-
-# ---------------- STUDENTS PAGE ----------------
-
-@app.route("/students")
-def students():
-
     conn = get_db()
 
     students = conn.execute(
-        "SELECT * FROM students"
+        "SELECT * FROM students ORDER BY id DESC"
     ).fetchall()
+
+    total = conn.execute(
+        "SELECT COUNT(*) FROM students"
+    ).fetchone()[0]
+
+    passed = conn.execute(
+        "SELECT COUNT(*) FROM students WHERE marks >= 45"
+    ).fetchone()[0]
+
+    excellent = conn.execute(
+        "SELECT COUNT(*) FROM students WHERE marks >= 90"
+    ).fetchone()[0]
 
     conn.close()
 
+    return render_template(
+        "home.html",
+        students=students,
+        total=total,
+        passed=passed,
+        excellent=excellent
+    )
+
+
+# ==========================
+# STUDENTS LIST
+# ==========================
+@app.route("/students")
+def students_page():
+    conn = get_db()
+
+    students = conn.execute(
+        "SELECT * FROM students ORDER BY id DESC"
+    ).fetchall()
+
+    conn.close()
 
     return render_template(
         "students.html",
@@ -58,23 +62,23 @@ def students():
     )
 
 
-
-# ---------------- STUDENT DETAIL PAGE ----------------
-
-@app.route("/detail/<int:id>")
-def detail(id):
-
+# ==========================
+# VIEW STUDENT
+# ==========================
+@app.route("/students/<int:id>")
+def student_detail(id):
     conn = get_db()
 
-
     student = conn.execute(
-        "SELECT * FROM students WHERE id = ?",
+        "SELECT * FROM students WHERE id=?",
         (id,)
     ).fetchone()
 
-
     conn.close()
 
+    if student is None:
+        flash("Student not found", "danger")
+        return redirect(url_for("students_page"))
 
     return render_template(
         "detail.html",
@@ -82,23 +86,25 @@ def detail(id):
     )
 
 
-
-# ---------------- ADD STUDENT PAGE ----------------
-
-@app.route("/add_student", methods=["GET", "POST"])
+# ==========================
+# ADD STUDENT
+# ==========================
+@app.route("/add", methods=["GET", "POST"])
 def add_student():
+
+    if session.get("role") != "admin":
+        flash("Admins only!", "danger")
+        return redirect(url_for("home"))
 
     if request.method == "POST":
 
-        name = request.form["name"]
+        name = request.form["student_name"]
         roll = request.form["roll"]
         subject = request.form["subject"]
         marks = request.form["marks"]
         attendance = request.form["attendance"]
 
-
         conn = get_db()
-
 
         conn.execute(
             """
@@ -110,38 +116,30 @@ def add_student():
                 name,
                 roll,
                 subject,
-                marks,
-                attendance
+                int(marks),
+                int(attendance)
             )
         )
-
 
         conn.commit()
         conn.close()
 
+        flash("Student added successfully!", "success")
 
-        flash(
-            "Student added successfully!",
-            "success"
-        )
+        return redirect(url_for("students_page"))
 
-
-        return redirect(
-            "/students"
-        )
-
-
-    return render_template(
-        "add_student.html"
-    )
-
-# ---------------- EDIT STUDENT ----------------
-
-@app.route("/edit_student/<int:id>", methods=["GET", "POST"])
+    return render_template("add_students.html")
+# ==========================
+# EDIT STUDENT
+# ==========================
+@app.route("/edit/<int:id>", methods=["GET", "POST"])
 def edit_student(id):
 
-    conn = get_db()
+    if session.get("role") != "admin":
+        flash("Admins only!", "danger")
+        return redirect(url_for("home"))
 
+    conn = get_db()
 
     if request.method == "POST":
 
@@ -151,50 +149,40 @@ def edit_student(id):
         marks = request.form["marks"]
         attendance = request.form["attendance"]
 
-
-        conn.execute(
-            """
+        conn.execute("""
             UPDATE students
-            SET name=?,
+            SET
+                name=?,
                 roll=?,
                 subject=?,
                 marks=?,
                 attendance=?
             WHERE id=?
-            """,
-            (
-                name,
-                roll,
-                subject,
-                marks,
-                attendance,
-                id
-            )
-        )
-
+        """,
+        (
+            name,
+            roll,
+            subject,
+            int(marks),
+            int(attendance),
+            id
+        ))
 
         conn.commit()
         conn.close()
 
-
-        flash(
-            "Student updated successfully!",
-            "success"
-        )
-
-
-        return redirect("/students")
-
-
+        flash("Student updated successfully!", "success")
+        return redirect(url_for("students_page"))
 
     student = conn.execute(
         "SELECT * FROM students WHERE id=?",
         (id,)
     ).fetchone()
 
-
     conn.close()
 
+    if student is None:
+        abort(404)
 
     return render_template(
         "edit_student.html",
@@ -202,275 +190,272 @@ def edit_student(id):
     )
 
 
-
-
-# ---------------- DELETE STUDENT ----------------
-
-@app.route("/delete_student/<int:id>")
+# ==========================
+# DELETE STUDENT
+# ==========================
+@app.route("/delete/<int:id>")
 def delete_student(id):
+
+    if session.get("role") != "admin":
+        flash("Admins only!", "danger")
+        return redirect(url_for("home"))
 
     conn = get_db()
 
+    student = conn.execute(
+        "SELECT * FROM students WHERE id=?",
+        (id,)
+    ).fetchone()
+
+    if student is None:
+        conn.close()
+        flash("Student not found!", "danger")
+        return redirect(url_for("students_page"))
 
     conn.execute(
         "DELETE FROM students WHERE id=?",
         (id,)
     )
 
-
     conn.commit()
     conn.close()
 
+    flash("Student deleted successfully!", "success")
 
-    flash(
-        "Student deleted successfully!",
-        "danger"
+    return redirect(url_for("students_page"))
+
+
+# ==========================
+# SEARCH STUDENT
+# ==========================
+@app.route("/search")
+def search():
+
+    q = request.args.get("q", "")
+
+    conn = get_db()
+
+    if q:
+
+        students = conn.execute("""
+            SELECT *
+            FROM students
+            WHERE
+                name LIKE ?
+                OR subject LIKE ?
+                OR roll LIKE ?
+            ORDER BY id DESC
+        """,
+        (
+            f"%{q}%",
+            f"%{q}%",
+            f"%{q}%"
+        )).fetchall()
+
+    else:
+
+        students = conn.execute(
+            "SELECT * FROM students ORDER BY id DESC"
+        ).fetchall()
+
+    conn.close()
+
+    return render_template(
+        "search.html",
+        students=students,
+        query=q
     )
 
 
-    return redirect("/students")
-
-
-
-
-# ---------------- FILTER STUDENTS ----------------
-
-@app.route("/filter", methods=["GET", "POST"])
+# ==========================
+# FILTER STUDENTS
+# ==========================
+@app.route("/filter")
 def filter_students():
 
-    students = []
+    subject = request.args.get("subject", "")
+    grade = request.args.get("grade", "")
 
+    conn = get_db()
 
-    if request.method == "POST":
+    subjects = conn.execute("""
+        SELECT DISTINCT subject
+        FROM students
+        WHERE subject IS NOT NULL
+        ORDER BY subject
+    """).fetchall()
 
-        subject = request.form["subject"]
+    query = "SELECT * FROM students WHERE 1=1"
+    params = []
 
+    if subject:
+        query += " AND subject=?"
+        params.append(subject)
 
-        conn = get_db()
+    if grade == "excellent":
+        query += " AND marks>=90"
 
+    elif grade == "good":
+        query += " AND marks>=75 AND marks<90"
 
-        students = conn.execute(
-            """
-            SELECT * FROM students
-            WHERE subject LIKE ?
-            """,
-            (
-                "%" + subject + "%",
-            )
-        ).fetchall()
+    elif grade == "average":
+        query += " AND marks>=60 AND marks<75"
 
+    elif grade == "poor":
+        query += " AND marks<45"
 
-        conn.close()
+    query += " ORDER BY id DESC"
 
+    students = conn.execute(
+        query,
+        params
+    ).fetchall()
 
+    conn.close()
 
     return render_template(
         "filter.html",
-        students=students
+        students=students,
+        subjects=subjects,
+        selected_subject=subject,
+        selected_grade=grade
     )
+# ==========================
+# ABOUT PAGE
+# ==========================
+@app.route("/about")
+def about():
+    return render_template("about.html")
 
 
-
-# ---------------- LOGIN PAGE ----------------
-
-@app.route("/login", methods=["GET", "POST"])
-def login():
-
-    if request.method == "POST":
-
-        username = request.form["username"]
-        password = request.form["password"]
-
-
-        conn = get_db()
-
-
-        user = conn.execute(
-            """
-            SELECT * FROM users
-            WHERE username=? AND password=?
-            """,
-            (
-                username,
-                password
-            )
-        ).fetchone()
-
-
-        conn.close()
-
-
-
-        if user:
-
-            session["username"] = user["username"]
-            session["role"] = user["role"]
-
-
-            flash(
-                "Login successful!",
-                "success"
-            )
-
-
-            return redirect("/")
-
-        else:
-
-            flash(
-                "Invalid username or password",
-                "danger"
-            )
-
-
-
-    return render_template(
-        "login.html"
-    )
-
-# ---------------- REGISTER PAGE ----------------
-
+# ==========================
+# REGISTER
+# ==========================
 @app.route("/register", methods=["GET", "POST"])
 def register():
 
     if request.method == "POST":
 
-        username = request.form["username"]
+        username = request.form["username"].strip()
         password = request.form["password"]
-        role = request.form.get(
-            "role",
-            "student"
-        )
-
 
         conn = get_db()
 
-
-        existing_user = conn.execute(
+        existing = conn.execute(
             "SELECT * FROM users WHERE username=?",
             (username,)
         ).fetchone()
 
-
-
-        if existing_user:
-
+        if existing:
             conn.close()
+            flash("Username already exists!", "danger")
+            return render_template("register.html")
 
-            flash(
-                "Username already exists!",
-                "danger"
-            )
-
-            return redirect(
-                "/register"
-            )
-
-
+        hashed_password = generate_password_hash(password)
 
         conn.execute(
             """
-            INSERT INTO users
-            (username, password, role)
-            VALUES (?, ?, ?)
+            INSERT INTO users(username,password,role)
+            VALUES(?,?,?)
             """,
-            (
-                username,
-                password,
-                role
-            )
+            (username, hashed_password, "student")
         )
-
 
         conn.commit()
         conn.close()
 
+        flash("Registration successful! Please login.", "success")
+        return redirect(url_for("login"))
 
-        flash(
-            "Registration successful!",
-            "success"
-        )
-
-
-        return redirect(
-            "/login"
-        )
+    return render_template("register.html")
 
 
+# ==========================
+# LOGIN
+# ==========================
+@app.route("/login", methods=["GET", "POST"])
+def login():
 
-    return render_template(
-        "register.html"
-    )
+    if request.method == "POST":
+
+        username = request.form["username"].strip()
+        password = request.form["password"]
+
+        conn = get_db()
+
+        user = conn.execute(
+            "SELECT * FROM users WHERE username=?",
+            (username,)
+        ).fetchone()
+
+        conn.close()
+
+        if user and check_password_hash(user["password"], password):
+
+            session["username"] = username
+            session["role"] = user["role"]
+
+            flash(f"Welcome {username}!", "success")
+            return redirect(url_for("home"))
+
+        flash("Invalid username or password", "danger")
+
+    return render_template("login.html")
 
 
-
-
-# ---------------- LOGOUT ----------------
-
+# ==========================
+# LOGOUT
+# ==========================
 @app.route("/logout")
 def logout():
 
-    session.clear()
+    session.pop("username", None)
+    session.pop("role", None)
+
+    flash("Logged out successfully.", "info")
+
+    return redirect(url_for("home"))
 
 
-    flash(
-        "Logged out successfully!",
-        "success"
-    )
+# ==========================
+# SUBJECTS PAGE
+# ==========================
+@app.route("/subjects")
+def subjects():
 
+    conn = get_db()
 
-    return redirect(
-        "/login"
-    )
+    rows = conn.execute("""
+        SELECT
+            subjects.name AS subject_name,
+            COUNT(students.id) AS student_count
+        FROM subjects
+        LEFT JOIN students
+        ON students.subject = subjects.name
+        GROUP BY subjects.name
+        ORDER BY subjects.name
+    """).fetchall()
 
-
-
-
-# ---------------- CHECK ADMIN ----------------
-
-@app.route("/admin")
-def admin():
-
-    if "username" not in session:
-
-        flash(
-            "Please login first!",
-            "danger"
-        )
-
-        return redirect(
-            "/login"
-        )
-
-
-
-    if session.get("role") != "admin":
-
-        flash(
-            "Admins only! You do not have permission.",
-            "danger"
-        )
-
-        return redirect(
-            "/"
-        )
-
-
+    conn.close()
 
     return render_template(
-        "admin.html"
+        "subjects.html",
+        rows=rows
     )
 
 
+# ==========================
+# 404 ERROR PAGE
+# ==========================
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template("404.html"), 404
 
 
-# ---------------- START APPLICATION ----------------
-
+# ==========================
+# START APPLICATION
+# ==========================
 if __name__ == "__main__":
-
     init_db()
-
-
-    app.run(
-        debug=True
-    )
+    app.run(debug=True)
+    

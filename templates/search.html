@@ -1,358 +1,297 @@
 {% extends "base.html" %}
 
+
 {% block title %}
-Search Results — Government Polytechnic Hingoli
+Search Students — Government Polytechnic Hingoli
 {% endblock %}
+
 
 
 {% block content %}
 
 
-<div class="d-flex justify-content-between align-items-center mb-4">
-
-<h2 class="fw-bold mb-0">
-🔍 Student Search Results
-</h2>
+<div class="container mt-4">
 
 
-<a href="{{ url_for('students_page') }}"
-class="btn btn-outline-secondary">
 
-← All Students
+    <div class="d-flex justify-content-between align-items-center mb-3">
 
-</a>
+
+        <h2>
+
+            <i class="bi bi-search"></i>
+
+            Search Students
+
+        </h2>
+
+
+
+        <a href="/students" class="btn btn-secondary">
+
+
+            <i class="bi bi-arrow-left"></i>
+
+            Back to Students
+
+
+        </a>
+
+
+    </div>
+
+
+
+
+    <div class="card shadow">
+
+
+
+        <div class="card-header">
+
+
+            <h5 class="mb-0">
+
+                Search Student Record
+
+            </h5>
+
+
+        </div>
+
+
+
+
+        <div class="card-body">
+
+
+
+            <form method="POST" action="/search">
+
+
+
+                <div class="row">
+
+
+
+                    <div class="col-md-10 mb-3">
+
+
+                        <label class="form-label">
+
+                            Search by Name / Roll Number
+
+                        </label>
+
+
+
+                        <input
+                            type="text"
+                            name="search"
+                            class="form-control"
+                            placeholder="Enter student name or roll number"
+                            required>
+
+
+                    </div>
+                    
+                    <div class="col-md-2 mb-3 d-flex align-items-end">
+
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary w-100">
+
+
+                            <i class="bi bi-search"></i>
+
+                            Search
+
+
+                        </button>
+
+
+                    </div>
+
+
+
+                </div>
+
+
+
+            </form>
+
+
+
+
+            <hr>
+
+
+
+
+            <h5 class="mb-3">
+
+                Search Results
+
+            </h5>
+
+
+
+
+            <div class="table-responsive">
+
+
+                <table class="table table-bordered table-hover">
+
+
+
+                    <thead class="table-dark">
+
+
+                        <tr>
+
+
+                            <th>
+                                ID
+                            </th>
+
+
+                            <th>
+                                Name
+                            </th>
+
+
+                            <th>
+                                Roll No
+                            </th>
+
+
+                            <th>
+                                Subject
+                            </th>
+
+
+                            <th>
+                                Marks
+                            </th>
+
+
+                            <th>
+                                Action
+                            </th>
+
+
+                        </tr>
+
+
+                    </thead>
+
+
+
+                    <tbody>
+
+
+                    {% for student in students %}
+
+
+                        <tr>
+
+
+                            <td>
+                                {{ student['id'] }}
+                            </td>
+
+
+                            <td>
+                                {{ student['name'] }}
+                            </td>
+
+
+                            <td>
+                                {{ student['roll'] }}
+                            </td>
+
+
+                            <td>
+                                {{ student['subject'] }}
+                            </td>
+
+
+                            <td>
+                                {{ student['marks'] }}
+                            </td>
+
+
+                            <td>
+
+                                <a href="/detail/{{ student['id'] }}"
+                                   class="btn btn-info btn-sm">
+
+                                    View
+
+                                </a>
+
+
+                            </td>
+
+
+                        </tr>
+
+
+                    {% endfor %}
+                    
+                    {% if students|length == 0 %}
+
+
+                    <tr>
+
+
+                        <td colspan="6" class="text-center">
+
+
+                            <div class="alert alert-warning mb-0">
+
+
+                                <i class="bi bi-exclamation-circle"></i>
+
+
+                                No student found.
+
+
+                            </div>
+
+
+                        </td>
+
+
+                    </tr>
+
+
+
+                    {% endif %}
+
+
+
+                    </tbody>
+
+
+                </table>
+
+
+
+            </div>
+
+
+
+        </div>
+
+
+
+    </div>
+
 
 
 </div>
-
-
-
-
-
-{% if query %}
-
-<div class="alert alert-info d-flex justify-content-between align-items-center">
-
-<div>
-
-Searching for:
-
-<strong>{{ query }}</strong>
-
-<br>
-
-Found 
-<strong>{{ students|length }}</strong>
-student(s)
-
-</div>
-
-
-<a href="{{ url_for('search') }}"
-class="btn btn-sm btn-secondary">
-
-Clear
-
-</a>
-
-
-</div>
-
-{% endif %}
-
-
-
-
-
-
-{% if students %}
-
-
-<div class="card shadow-sm border-0">
-
-
-<div class="card-header text-white py-3"
-style="background:#1e3a5f;">
-
-
-<h5 class="mb-0">
-
-🎓 Government Polytechnic Hingoli Students
-
-</h5>
-
-
-</div>
-
-
-
-
-
-<div class="card-body p-0">
-
-
-<div class="table-responsive">
-
-
-<table class="table table-hover mb-0">
-
-
-<thead class="table-light">
-
-<tr>
-
-<th class="ps-4">
-#
-</th>
-
-<th>
-Student Name
-</th>
-
-<th>
-Roll No
-</th>
-
-<th>
-Subject
-</th>
-
-<th>
-Marks
-</th>
-
-<th>
-Attendance
-</th>
-
-<th>
-Performance
-</th>
-
-<th>
-Action
-</th>
-
-</tr>
-
-
-</thead>
-
-
-
-
-
-<tbody>
-
-
-{% for student in students %}
-
-
-<tr class="align-middle">
-
-
-<td class="ps-4 text-muted">
-
-{{ loop.index }}
-
-</td>
-
-
-
-
-<td>
-
-
-<div class="d-flex align-items-center">
-
-
-<div class="rounded-circle d-flex 
-align-items-center justify-content-center me-2"
-
-style="
-width:35px;
-height:35px;
-background:#2d6a9f;
-color:white;
-">
-
-
-{{ student['name'][0]|upper }}
-
-
-</div>
-
-
-
-<b>
-{{ student['name'] }}
-</b>
-
-
-</div>
-
-
-</td>
-
-
-
-
-
-
-<td>
-
-{{ student['roll'] }}
-
-</td>
-
-
-
-
-<td>
-
-{{ student['subject'] }}
-
-</td>
-
-
-
-
-
-<td>
-
-
-<strong>
-{{ student['marks'] }}
-</strong>
-
-/100
-
-
-</td>
-
-
-
-
-
-<td>
-
-
-{{ student['attendance'] }}%
-
-
-</td>
-
-
-
-
-
-
-<td>
-
-
-{% if student['marks'] >= 90 %}
-
-<span class="badge bg-success">
-🏆 Excellent
-</span>
-
-
-{% elif student['marks'] >= 75 %}
-
-
-<span class="badge bg-primary">
-👍 Good
-</span>
-
-
-{% elif student['marks'] >= 60 %}
-
-
-<span class="badge bg-warning text-dark">
-📈 Average
-</span>
-
-
-{% else %}
-
-
-<span class="badge bg-danger">
-⚠️ Need Improvement
-</span>
-
-
-{% endif %}
-
-
-</td>
-
-
-
-
-
-<td>
-
-
-<a href="{{ url_for('student_detail', id=student['id']) }}"
-
-class="btn btn-sm btn-outline-primary">
-
-View
-
-</a>
-
-
-</td>
-
-
-
-
-
-</tr>
-
-
-{% endfor %}
-
-
-</tbody>
-
-
-</table>
-
-
-</div>
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-{% else %}
-
-
-<div class="alert alert-warning text-center">
-
-<h5>
-😔 No Students Found
-</h5>
-
-<p class="mb-0">
-
-Try searching with another name, roll number or subject.
-
-</p>
-
-
-</div>
-
-
-{% endif %}
-
 
 
 

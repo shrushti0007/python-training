@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 
+
 {% block title %}
 Students — Government Polytechnic Hingoli
 {% endblock %}
@@ -9,23 +10,31 @@ Students — Government Polytechnic Hingoli
 {% block content %}
 
 
+
 <div class="container mt-4">
+
 
 
     <div class="d-flex justify-content-between align-items-center mb-3">
 
 
         <h2>
+
             <i class="bi bi-people-fill"></i>
+
             Students List
+
         </h2>
 
 
 
-        <a href="/add_student" class="btn btn-success">
 
-            <i class="bi bi-person-plus"></i>
-            Add Student
+        <a href="{{ url_for('add_student') }}" class="btn btn-success">
+    <i class="bi bi-person-plus-fill"></i>
+
+    Add Student
+</a>
+
 
         </a>
 
@@ -35,26 +44,38 @@ Students — Government Polytechnic Hingoli
 
 
 
+
     {% with messages = get_flashed_messages(with_categories=true) %}
+
 
         {% if messages %}
 
 
+
             {% for category, message in messages %}
+
 
                 <div class="alert alert-{{ category }}">
 
+
                     {{ message }}
 
+
                 </div>
+
 
 
             {% endfor %}
 
 
+
         {% endif %}
 
+
+
     {% endwith %}
+
+
 
 
 
@@ -62,71 +83,99 @@ Students — Government Polytechnic Hingoli
     <div class="card shadow">
 
 
+
         <div class="card-header">
+
 
             <h5 class="mb-0">
 
+
                 Student Records
+
 
             </h5>
 
+
         </div>
+
+
 
 
 
         <div class="card-body">
 
 
+
             <div class="table-responsive">
+
 
 
                 <table class="table table-bordered table-hover">
 
 
+
                     <thead class="table-dark">
+
 
 
                         <tr>
 
 
                             <th>
+
                                 ID
+
                             </th>
 
 
                             <th>
+
                                 Name
+
                             </th>
 
 
                             <th>
+
                                 Roll No
+
                             </th>
 
 
                             <th>
+
                                 Subject
+
                             </th>
                             
                             <th>
+
                                 Marks
+
                             </th>
 
 
                             <th>
+
                                 Attendance
+
                             </th>
 
 
                             <th>
+
                                 Action
+
                             </th>
+
 
 
                         </tr>
 
 
                     </thead>
+
+
 
 
 
@@ -137,41 +186,55 @@ Students — Government Polytechnic Hingoli
                     {% for student in students %}
 
 
+
                         <tr>
 
 
+
                             <td>
+
                                 {{ student['id'] }}
+
                             </td>
 
 
 
                             <td>
+
                                 {{ student['name'] }}
+
                             </td>
 
 
 
                             <td>
+
                                 {{ student['roll'] }}
+
                             </td>
 
 
 
                             <td>
+
                                 {{ student['subject'] }}
+
                             </td>
 
 
 
                             <td>
+
                                 {{ student['marks'] }}
+
                             </td>
 
 
 
                             <td>
+
                                 {{ student['attendance'] }}%
+
                             </td>
 
 
@@ -179,67 +242,86 @@ Students — Government Polytechnic Hingoli
                             <td>
 
 
-                                <a href="/detail/{{ student['id'] }}"
-                                   class="btn btn-info btn-sm">
 
-                                    <i class="bi bi-eye"></i>
-                                    View
+                                
 
-                                </a>
+<a href="{{ url_for('student_detail', id=student['id']) }}"
+   class="btn btn-info btn-sm">
+    <i class="bi bi-eye"></i>
+    View
 
 
 
-                                <a href="/edit_student/{{ student['id'] }}"
+</a> 
+
+
+
+                                <a href="{{ url_for('edit_student', id=student['id']) }}"
                                    class="btn btn-primary btn-sm">
 
+
                                     <i class="bi bi-pencil"></i>
+
                                     Edit
+
 
                                 </a>
 
 
 
-                                <a href="/delete_student/{{ student['id'] }}"
+
+
+                                <a href="{{ url_for('delete_student', id=student['id']) }}"
                                    class="btn btn-danger btn-sm"
                                    onclick="return confirm('Delete this student?');">
 
 
                                     <i class="bi bi-trash"></i>
+
                                     Delete
 
 
                                 </a>
 
 
+
                             </td>
 
 
+
                         </tr>
+
+
 
 
                     {% endfor %}
                     
                     {% if students|length == 0 %}
 
+
                     <tr>
+
 
                         <td colspan="7" class="text-center">
 
-                            <h5 class="text-muted">
-                                No students found
-                            </h5>
+
+                            <div class="alert alert-info mb-0">
 
 
-                            <a href="/add_student" 
-                               class="btn btn-success mt-2">
+                                <i class="bi bi-info-circle"></i>
 
-                                Add First Student
 
-                            </a>
+                                No students available.
+
+
+                            </div>
+
 
                         </td>
 
+
                     </tr>
+
 
 
                     {% endif %}
@@ -249,19 +331,25 @@ Students — Government Polytechnic Hingoli
                     </tbody>
 
 
+
                 </table>
+
 
 
             </div>
 
 
+
         </div>
+
 
 
     </div>
 
 
+
 </div>
+
 
 
 {% endblock %}

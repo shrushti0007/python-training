@@ -2,7 +2,6 @@ import sqlite3
 import os
 
 
-
 # ---------------- DATABASE PATH ----------------
 
 DB_PATH = os.path.join(
@@ -12,18 +11,17 @@ DB_PATH = os.path.join(
 
 
 
-
 # ---------------- DATABASE CONNECTION ----------------
 
 def get_db():
 
-    conn = sqlite3.connect(
-        DB_PATH
-    )
+    conn = sqlite3.connect(DB_PATH)
 
     conn.row_factory = sqlite3.Row
 
     return conn
+
+
 
 # ---------------- CREATE TABLES ----------------
 
@@ -34,31 +32,21 @@ def init_db():
     cursor = conn.cursor()
 
 
-
     # Students Table
 
     cursor.execute(
         """
         CREATE TABLE IF NOT EXISTS students
         (
-
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-
             name TEXT NOT NULL,
-
             roll TEXT NOT NULL,
-
             subject TEXT NOT NULL,
-
             marks INTEGER,
-
             attendance INTEGER
-
         )
         """
     )
-
-
 
 
     # Users Table
@@ -67,25 +55,21 @@ def init_db():
         """
         CREATE TABLE IF NOT EXISTS users
         (
-
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-
             username TEXT UNIQUE NOT NULL,
-
             password TEXT NOT NULL,
-
             role TEXT DEFAULT 'student'
-
         )
         """
     )
 
 
-
     conn.commit()
 
     conn.close()
-    
+
+
+
 # ---------------- CREATE DEFAULT ADMIN ----------------
 
 def create_admin():
@@ -93,11 +77,10 @@ def create_admin():
     conn = get_db()
 
 
-
     admin = conn.execute(
         """
         SELECT * FROM users
-        WHERE username = ?
+        WHERE username=?
         """,
         ("admin",)
     ).fetchone()
@@ -106,13 +89,11 @@ def create_admin():
 
     if admin is None:
 
-
         conn.execute(
             """
             INSERT INTO users
-            (username, password, role)
-
-            VALUES (?, ?, ?)
+            (username,password,role)
+            VALUES (?,?,?)
             """,
             (
                 "admin",
@@ -125,23 +106,16 @@ def create_admin():
         conn.commit()
 
 
-
     conn.close()
 
 
 
-
-
-# ---------------- RUN DATABASE SETUP ----------------
+# ---------------- DATABASE SETUP ----------------
 
 if __name__ == "__main__":
-
 
     init_db()
 
     create_admin()
 
-
-    print(
-        "Database initialized successfully!"
-    )
+    print("Database initialized successfully!")

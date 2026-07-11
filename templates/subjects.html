@@ -1,120 +1,317 @@
 {% extends "base.html" %}
 
+
 {% block title %}
-Subjects Overview — College Portal
+Subjects — Government Polytechnic Hingoli
 {% endblock %}
+
 
 
 {% block content %}
 
 
-<div class="d-flex justify-content-between align-items-center mb-4">
+<div class="container mt-4">
 
-    <div>
-        <h2 class="fw-bold mb-1">
-            📚 Subjects Overview
+
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+
+
+        <h2>
+
+            <i class="bi bi-book-fill"></i>
+
+            Engineering Subjects
+
         </h2>
 
-        <p class="text-muted mb-0">
-            Subject wise student distribution
-        </p>
+
+
+        <a href="/" class="btn btn-secondary">
+
+
+            <i class="bi bi-house"></i>
+
+            Home
+
+
+        </a>
+
+
     </div>
 
 
-    <a href="{{ url_for('home') }}"
-       class="btn btn-outline-secondary">
 
-        ← Back Home
 
-    </a>
+
+    <div class="row">
+
+
+
+
+
+        <!-- Computer Engineering -->
+
+
+        <div class="col-md-4 mb-4">
+
+
+            <div class="card shadow h-100">
+
+
+
+                <div class="card-header bg-primary text-white">
+
+
+                    <h5 class="mb-0">
+
+
+                        💻 Computer Engineering
+
+
+                    </h5>
+
+
+                </div>
+
+
+
+
+                <div class="card-body">
+
+
+                    <ul class="list-group list-group-flush">
+
+
+                        <li class="list-group-item">
+
+                            Data Structure
+
+                        </li>
+
+
+                        <li class="list-group-item">
+
+                            Database Management System
+
+                        </li>
+
+
+                        <li class="list-group-item">
+
+                            Object Oriented Programming
+
+                        </li>
+
+
+                        <li class="list-group-item">
+
+                            Java Programming
+
+                        </li>
+                        
+                        <li class="list-group-item">
+
+                            Advanced Computer Network
+
+                        </li>
+
+
+                        <li class="list-group-item">
+
+                            Operating System
+
+                        </li>
+
+
+                        <li class="list-group-item">
+
+                            Software Engineering
+
+                        </li>
+
+
+                    </ul>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+
+
+
+        <!-- Electronics & Telecommunication Engineering -->
+
+
+        <div class="col-md-4 mb-4">
+
+
+            <div class="card shadow h-100">
+
+
+                <div class="card-header bg-success text-white">
+
+
+                    <h5 class="mb-0">
+
+
+                        📡 Electronics & Telecommunication
+
+
+                    </h5>
+
+
+                </div>
+
+
+
+
+                <div class="card-body">
+
+
+                    <ul class="list-group list-group-flush">
+
+
+                        <li class="list-group-item">
+
+                            Electronic Devices & Circuits
+
+                        </li>
+
+
+                        <li class="list-group-item">
+
+                            Microprocessor
+
+                        </li>
+
+
+                        <li class="list-group-item">
+
+                            Digital Communication
+
+                        </li>
+
+
+                        <li class="list-group-item">
+
+                            Embedded System
+
+                        </li>
+
+
+                        <li class="list-group-item">
+
+                            Wireless Communication
+
+                        </li>
+
+
+                    </ul>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+        
+        <!-- Mechanical Engineering -->
+
+
+        <div class="col-md-4 mb-4">
+
+
+            <div class="card shadow h-100">
+
+
+                <div class="card-header bg-warning">
+
+
+                    <h5 class="mb-0">
+
+
+                        ⚙️ Mechanical Engineering
+
+
+                    </h5>
+
+
+                </div>
+
+
+
+
+                <div class="card-body">
+
+
+                    <ul class="list-group list-group-flush">
+
+
+                        <li class="list-group-item">
+
+                            Engineering Mechanics
+
+                        </li>
+
+
+                        <li class="list-group-item">
+
+                            Machine Design
+
+                        </li>
+
+
+                        <li class="list-group-item">
+
+                            Manufacturing Technology
+
+                        </li>
+
+
+                        <li class="list-group-item">
+
+                            CAD / CAM
+
+                        </li>
+
+
+                        <li class="list-group-item">
+
+                            Thermal Engineering
+
+                        </li>
+
+
+                    </ul>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+
+    </div>
+
+
 
 </div>
 
-
-
-
-
-<div class="row">
-
-
-{% for row in rows %}
-
-
-<div class="col-md-4 col-lg-3 mb-4">
-
-
-<div class="card shadow-sm h-100 text-center student-card">
-
-
-<div class="card-body p-4">
-
-
-<div class="rounded-circle mx-auto mb-3 d-flex 
-justify-content-center align-items-center text-white"
-
-style="width:60px;
-height:60px;
-background:#1e3a5f;
-font-size:25px;">
-
-📖
-
-</div>
-
-
-
-
-<h3 class="fw-bold"
-style="color:#1e3a5f;">
-
-{{ row['student_count'] }}
-
-</h3>
-
-
-<p class="text-muted mb-2">
-Students
-</p>
-
-
-
-
-<h5 class="fw-bold">
-
-{{ row['subject_name'] }}
-
-</h5>
-
-
-
-</div>
-
-
-</div>
-
-
-</div>
-
-
-{% else %}
-
-
-<div class="col-12">
-
-<div class="alert alert-warning text-center">
-
-No subjects found.
-
-</div>
-
-</div>
-
-
-{% endfor %}
-
-
-
-</div>
 
 
 {% endblock %}

@@ -1,173 +1,183 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+
 
 {% block title %}
 Login — Government Polytechnic Hingoli
 {% endblock %}
 
 
+
 {% block content %}
 
-<div class="row justify-content-center">
 
-<div class="col-md-5">
+<div class="container mt-4">
 
 
-<div class="card shadow-lg border-0">
+    <div class="row justify-content-center">
 
-<!-- Header -->
 
-<div class="card-header text-white text-center py-3"
-style="background:#1e3a5f;">
+        <div class="col-md-5">
 
-<h4 class="mb-1">
-🎓 Student Portal Login
-</h4>
 
-<small>
-Government Polytechnic Hingoli
-</small>
+
+            <div class="card shadow">
+
+
+
+                <div class="card-header text-center">
+
+
+                    <h4>
+
+                        <i class="bi bi-box-arrow-in-right"></i>
+
+                        Login
+
+                    </h4>
+
+
+                </div>
+
+
+
+
+                <div class="card-body">
+
+
+
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+
+                        {% if messages %}
+
+
+                            {% for category, message in messages %}
+
+
+                                <div class="alert alert-{{ category }}">
+
+                                    {{ message }}
+
+                                </div>
+
+
+                            {% endfor %}
+
+
+                        {% endif %}
+
+
+                    {% endwith %}
+
+
+
+
+
+                    <form method="POST" action="/login">
+
+
+
+                        <div class="mb-3">
+
+
+                            <label class="form-label">
+
+                                Username
+
+                            </label>
+
+
+                            <input
+                                type="text"
+                                name="username"
+                                class="form-control"
+                                placeholder="Enter username"
+                                required>
+
+
+                        </div>
+                        
+                        <div class="mb-3">
+
+
+                            <label class="form-label">
+
+                                Password
+
+                            </label>
+
+
+                            <input
+                                type="password"
+                                name="password"
+                                class="form-control"
+                                placeholder="Enter password"
+                                required>
+
+
+                        </div>
+
+
+
+
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary w-100">
+
+
+                            <i class="bi bi-box-arrow-in-right"></i>
+
+                            Login
+
+
+                        </button>
+
+
+
+                    </form>
+                    
+                    <hr>
+
+
+
+                    <div class="text-center">
+
+
+                        <p class="mb-0">
+
+                            Don't have an account?
+
+
+                            <a href="/register">
+
+                                Register here
+
+                            </a>
+
+
+                        </p>
+
+
+                    </div>
+
+
+
+                </div>
+
+
+            </div>
+
+
+
+        </div>
+
+
+    </div>
+
+
 
 </div>
 
-
-
-<div class="card-body p-4">
-
-
-<div class="text-center mb-3">
-
-<div class="rounded-circle mx-auto d-flex align-items-center justify-content-center"
-
-style="
-width:70px;
-height:70px;
-background:#2d6a9f;
-color:white;
-font-size:32px;
-">
-
-👤
-
-</div>
-
-</div>
-
-
-
-<h5 class="text-center fw-bold mb-4">
-Welcome Back
-</h5>
-
-
-
-<form method="POST" action="{{ url_for('login') }}">
-
-
-
-<div class="mb-3">
-
-<label class="form-label fw-bold">
-Username
-</label>
-
-<div class="input-group">
-
-<span class="input-group-text">
-👤
-</span>
-
-<input type="text"
-name="username"
-class="form-control"
-placeholder="Enter username"
-required>
-
-</div>
-
-</div>
-
-
-
-
-
-<div class="mb-3">
-
-<label class="form-label fw-bold">
-Password
-</label>
-
-
-<div class="input-group">
-
-<span class="input-group-text">
-🔒
-</span>
-
-
-<input type="password"
-name="password"
-class="form-control"
-placeholder="Enter password"
-required>
-
-
-</div>
-
-</div>
-
-
-
-
-<div class="d-grid">
-
-<button type="submit"
-class="btn btn-lg"
-style="
-background:#1e3a5f;
-color:white;
-">
-
-Login
-
-</button>
-
-</div>
-
-
-
-</form>
-
-
-
-<hr>
-
-
-<p class="text-center mb-0">
-
-Don't have an account?
-
-<a href="{{ url_for('register') }}"
-class="fw-bold">
-
-Register Here
-
-</a>
-
-
-</p>
-
-
-
-</div>
-
-
-</div>
-
-
-</div>
-
-
-</div>
 
 
 {% endblock %}
