@@ -53,6 +53,10 @@ pip freeze > requirements.txt
 For Deployment -
 https://www.pythonanywhere.com/
 
+commands to use in python any where -
+mkvirtualenv myenv --python=python3.10
+cd python-training
+pip install -r requirements.txt
 To remove github repo if required
 cd ..
 rm -rf python-training
