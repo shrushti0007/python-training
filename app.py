@@ -2,6 +2,7 @@ from dotenv import load_dotenv
 from flask import Flask, render_template, request, redirect, url_for, flash, session, abort
 
 from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.utils import secure_filename
  
 load_dotenv() #load environment variables from .env file
 
@@ -17,7 +18,6 @@ from groq import Groq
 
 
 # ==========================
-
 # FLASK APP
 # ==========================
 
@@ -26,6 +26,13 @@ app = Flask(__name__)
 
 app.secret_key = "linkkiwi2026"
 
+
+# Upload Folder
+UPLOAD_FOLDER = os.path.join("static", "uploads")
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+
+# Create uploads folder if it doesn't exist
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 
 
@@ -222,27 +229,40 @@ def add_student():
 
 
         conn.commit()
-
         conn.close()
 
+    
 
+        # Photo
+        file = request.files.get("photo")
+        filename = None
 
-        flash(
-            "Student added successfully!",
-            "success"
-        )
+        if file and file.filename != "":
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
 
+        conn = get_db()
 
+        conn.execute("""
+            INSERT INTO students
+            (name, roll, subject, marks, attendance, photo)
+            VALUES (?, ?, ?, ?, ?, ?)
+        """, (
+            name,
+            roll,
+            subject,
+            int(marks),
+            int(attendance),
+            filename
+        ))
 
-        return redirect(
-            url_for("students_page")
-        )
+        conn.commit()
+        conn.close()
 
+        flash("Student added successfully!", "success")
+        return redirect(url_for("students_page"))
 
-
-    return render_template(
-        "add_students.html"
-    )
+    return render_template("add_students.html")
 
 # ==========================
 # EDIT STUDENT
@@ -700,13 +720,6 @@ def register():
     return render_template(
         "register.html"
     )
-
-
-
-
-
-
-
 
 # ==========================
 # LOGIN

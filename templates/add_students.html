@@ -1,78 +1,88 @@
 {% extends "base.html" %}
-{% block title %}Add Students — College Portal{% endblock %}
+{% block title %}Add Student - College Portal{% endblock %}
 
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-6">
 
-        <div class="card shadow-sm">
-            <div class="card-header bg-dark text-white">
-                <h5 class="mb-0">Add New Student</h5>
-            </div>
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
 
-            <div class="card-body p-4">
-                <form action="{{ url_for('add_student') }}" method="POST">
+            <div class="card shadow">
+                <div class="card-header bg-dark text-white">
+                    <h4 class="mb-0">Add New Student</h4>
+                </div>
 
-                    <div class="mb-3">
-                        <label class="form-label">Student Name</label>
-                        <input required
-                               name="student_name"
-                               class="form-control"
-                               placeholder="Enter Student Name"
-                               type="text">
-                    </div>
+                <div class="card-body">
 
-                    <div class="mb-3">
-                        <label class="form-label">Marks</label>
-                        <input required
-                               name="marks"
-                               min="0"
-                               max="100"
-                               class="form-control"
-                               placeholder="Enter Marks"
-                               type="number">
-                    </div>
+                    <form action="{{ url_for('add_student') }}"
+                          method="POST"
+                          enctype="multipart/form-data">
 
-                    <div class="mb-3">
-                        <label class="form-label">Roll Number</label>
-                        <input required
-                               name="roll"
-                               min="0"
-                               class="form-control"
-                               placeholder="Enter Roll Number"
-                               type="number">
-                    </div>
+                        <div class="mb-3">
+                            <label class="form-label">Student Name</label>
+                            <input type="text"
+                                   name="student_name"
+                                   class="form-control"
+                                   required>
+                        </div>
 
-                    <div class="mb-3">
-                        <label class="form-label">Subject</label>
-                        <input required
-                               name="subject"
-                               class="form-control"
-                               placeholder="Enter Subject"
-                               type="text">
-                    </div>
+                        <div class="mb-3">
+                            <label class="form-label">Roll Number</label>
+                            <input type="number"
+                                   name="roll"
+                                   class="form-control"
+                                   required>
+                        </div>
 
-                    <div class="mb-3">
-                        <label class="form-label">Attendance (%)</label>
-                        <input required
-                               name="attendance"
-                               min="0"
-                               max="100"
-                               class="form-control"
-                               placeholder="Enter Attendance"
-                               type="number">
-                    </div>
+                        <div class="mb-3">
+                            <label class="form-label">Subject</label>
+                            <input type="text"
+                                   name="subject"
+                                   class="form-control"
+                                   required>
+                        </div>
 
-                    <div class="d-grid">
-                        <button type="submit" class="btn btn-dark">
+                        <div class="mb-3">
+                            <label class="form-label">Marks</label>
+                            <input type="number"
+                                   name="marks"
+                                   class="form-control"
+                                   min="0"
+                                   max="100"
+                                   required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Attendance (%)</label>
+                            <input type="number"
+                                   name="attendance"
+                                   class="form-control"
+                                   min="0"
+                                   max="100"
+                                   required>
+                        </div>
+
+                        <!-- Student Photo -->
+                        <div class="mb-3">
+                            <label class="form-label">Student Photo</label>
+                            <input type="file"
+                                   name="photo"
+                                   class="form-control"
+                                   accept=".jpg,.jpeg,.png"
+                                   required>
+                        </div>
+
+                        <button type="submit" class="btn btn-dark w-100">
                             Add Student
                         </button>
-                    </div>
 
-                </form>
+                    </form>
+
+                </div>
             </div>
-        </div>
 
+        </div>
     </div>
 </div>
+
 {% endblock %}
